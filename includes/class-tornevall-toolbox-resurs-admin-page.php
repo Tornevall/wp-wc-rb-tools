@@ -61,9 +61,9 @@ class Tornevall_Toolbox_Resurs_Admin_Page {
 
             <div class="notice notice-warning">
                 <p>
-                    <strong>⚠️ DISCLAIMER:</strong>
-                    This plugin is NOT created, maintained, or endorsed by Resurs Bank.
-                    It is an independent third-party utility tool.
+                    <strong>⚠️ <?php esc_html_e('DISCLAIMER:', 'tornevalls-tools-for-resurs-bank-payments'); ?></strong>
+                    <?php esc_html_e('This plugin is NOT created, maintained, or endorsed by Resurs Bank.', 'tornevalls-tools-for-resurs-bank-payments'); ?>
+                    <?php esc_html_e('It is an independent third-party utility tool.', 'tornevalls-tools-for-resurs-bank-payments'); ?>
                 </p>
             </div>
 
@@ -73,22 +73,6 @@ class Tornevall_Toolbox_Resurs_Admin_Page {
                     <p><?php esc_html_e('Tornevalls Toolbox for Resurs provides utility and status tools for WooCommerce implementations that use Resurs Bank.', 'tornevalls-tools-for-resurs-bank-payments'); ?></p>
                 </div>
 
-                <div class="card">
-                    <h2><?php esc_html_e('What This Does', 'tornevalls-tools-for-resurs-bank-payments'); ?></h2>
-                    <ul>
-                        <li>✓ <?php esc_html_e('Currently nothing.', 'tornevalls-tools-for-resurs-bank-payments'); ?></li>
-                    </ul>
-                </div>
-
-                <div class="card">
-                    <h2><?php esc_html_e('What This Does NOT Do', 'tornevalls-tools-for-resurs-bank-payments'); ?></h2>
-                    <ul>
-                        <li>✗ <?php esc_html_e('Process or handle real payments', 'tornevalls-tools-for-resurs-bank-payments'); ?></li>
-                        <li>✗ <?php esc_html_e('Store financial or payment credentials', 'tornevalls-tools-for-resurs-bank-payments'); ?></li>
-                        <li>✗ <?php esc_html_e('Replace or supplement the official Resurs plugin', 'tornevalls-tools-for-resurs-bank-payments'); ?></li>
-                        <li>✗ <?php esc_html_e('Make decisions on refunds, captures, or payment status', 'tornevalls-tools-for-resurs-bank-payments'); ?></li>
-                    </ul>
-                </div>
 
                 <div class="card">
                     <h2><?php esc_html_e('Resurs Plugin Status', 'tornevalls-tools-for-resurs-bank-payments'); ?></h2>
@@ -132,11 +116,14 @@ class Tornevall_Toolbox_Resurs_Admin_Page {
             <style>
                 .tornevalls-resurs-cards {
                     display: grid;
-                    gap: 16px;
-                    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+                    gap: 12px;
+                    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
                 }
                 .tornevalls-resurs-cards .card {
                     margin: 0;
+                    max-width: none;
+                    width: 100%;
+                    box-sizing: border-box;
                 }
                 .tornevalls-resurs-check-btn {
                     display: inline-flex;

@@ -164,3 +164,15 @@ msgstr "Otillräckliga behörigheter"
 #: includes/class-ajax-handler.php
 msgid "No installed version provided"
 msgstr "Ingen installerad version angiven"
+
+#: includes/class-tornevall-toolbox-resurs-admin-page.php
+msgid "DISCLAIMER:"
+msgstr "ANSVARSFRISKRIVNING:"
+
+#: includes/class-tornevall-toolbox-resurs-admin-page.php
+msgid "This plugin is NOT created, maintained, or endorsed by Resurs Bank."
+msgstr "Detta tillägg är INTE skapat, underhållet eller godkänt av Resurs Bank."
+
+#: includes/class-tornevall-toolbox-resurs-admin-page.php
+msgid "It is an independent third-party utility tool."
+msgstr "Det är ett fristående verktyg från tredje part."
