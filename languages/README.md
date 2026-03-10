@@ -1,0 +1,2 @@
+Placeholder for translation files.
+

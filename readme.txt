@@ -6,7 +6,7 @@ Tested up to: 6.9
 Requires PHP: 8.1
 WC requires at least: 7.6.0
 WC Tested up to: 10.3.6
-Requires Plugins: woocommerce, resurs-bank-payments-for-woocommerce
+Requires Plugins: woocommerce
 Stable tag: 1.0.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
