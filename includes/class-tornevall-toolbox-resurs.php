@@ -44,6 +44,9 @@ class Tornevall_Toolbox_Resurs {
             return;
         }
 
+        // Initialize modules
+        \Tornevalls\ToolboxResurs\Modules\Part_Payment_Widget::init();
+
         Tornevall_Toolbox_Resurs_Settings_Tab::register();
     }
 

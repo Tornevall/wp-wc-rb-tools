@@ -111,19 +111,43 @@ class Tornevall_Toolbox_Resurs_Admin_Page {
                         <div id="version-check-result" style="margin-top: 15px; display: none;"></div>
                     <?php endif; ?>
                 </div>
+
+                <div class="card">
+                    <h2><?php esc_html_e('Part Payment Widget', 'tornevalls-tools-for-resurs-bank-payments'); ?></h2>
+                    <form method="POST" action="">
+                        <?php
+                        settings_fields('tornevalls_resurs_pp_shortcode_settings');
+                        do_settings_sections('tornevalls_resurs_pp_shortcode_settings');
+                        submit_button();
+                        ?>
+                    </form>
+                </div>
             </div>
 
             <style>
                 .tornevalls-resurs-cards {
                     display: grid;
-                    gap: 12px;
-                    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+                    gap: 20px;
+                    grid-template-columns: 1fr 1fr;
+                    margin-top: 20px;
                 }
                 .tornevalls-resurs-cards .card {
                     margin: 0;
                     max-width: none;
                     width: 100%;
                     box-sizing: border-box;
+                }
+                .tornevalls-resurs-cards .card:nth-child(3) {
+                    grid-column: 1 / -1;
+                    max-width: 50%;
+                }
+                @media (max-width: 768px) {
+                    .tornevalls-resurs-cards {
+                        grid-template-columns: 1fr;
+                    }
+                    .tornevalls-resurs-cards .card:nth-child(3) {
+                        max-width: 100%;
+                    }
                 }
                 .tornevalls-resurs-check-btn {
                     display: inline-flex;

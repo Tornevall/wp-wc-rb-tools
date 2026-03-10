@@ -1,208 +1,206 @@
+# Translations for Tornevalls Toolbox for Resurs Bank.
+# Copyright (C) 2026 Thomas Tornevall
+# This file is distributed under the same license as the Tornevalls Toolbox for Resurs Bank package.
 msgid ""
 msgstr ""
 "Project-Id-Version: Tornevalls Toolbox for Resurs Bank 1.0.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-10 00:00+0000\n"
-"PO-Revision-Date: 2026-03-10 00:00+0000\n"
-"Last-Translator: \n"
-"Language-Team: \n"
-"Language: sv_SE\n"
+"POT-Creation-Date: 2026-03-10 12:00+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
 "X-Domain: tornevalls-tools-for-resurs-bank-payments\n"
 
 #: includes/class-tornevall-toolbox-resurs-admin-page.php
 msgid "About This Plugin"
-msgstr "Om detta tillägg"
+msgstr ""
 
 #: includes/class-tornevall-toolbox-resurs-admin-page.php
 msgid "Tornevalls Toolbox for Resurs provides utility and status tools for WooCommerce implementations that use Resurs Bank."
-msgstr "Tornevalls Toolbox for Resurs tillhandahåller verktyg och statusinfo för WooCommerce-installationer som använder Resurs Bank."
+msgstr ""
 
 #: includes/class-tornevall-toolbox-resurs-admin-page.php
 msgid "What This Does"
-msgstr "Detta gör"
+msgstr ""
 
 #: includes/class-tornevall-toolbox-resurs-admin-page.php
 msgid "Currently nothing."
-msgstr "För närvarande ingenting."
+msgstr ""
 
 #: includes/class-tornevall-toolbox-resurs-admin-page.php
 msgid "What This Does NOT Do"
-msgstr "Detta gör INTE"
+msgstr ""
 
 #: includes/class-tornevall-toolbox-resurs-admin-page.php
 msgid "Process or handle real payments"
-msgstr "Behandlar eller hanterar faktiska betalningar"
+msgstr ""
 
 #: includes/class-tornevall-toolbox-resurs-admin-page.php
 msgid "Store financial or payment credentials"
-msgstr "Lagrar finansiella eller betalningsuppgifter"
+msgstr ""
 
 #: includes/class-tornevall-toolbox-resurs-admin-page.php
 msgid "Replace or supplement the official Resurs plugin"
-msgstr "Ersätter eller kompletterar den officiella Resurs-pluginen"
+msgstr ""
 
 #: includes/class-tornevall-toolbox-resurs-admin-page.php
 msgid "Make decisions on refunds, captures, or payment status"
-msgstr "Tar beslut om återbetalningar, debiteringar eller betalstatus"
+msgstr ""
 
 #: includes/class-tornevall-toolbox-resurs-admin-page.php
 msgid "Resurs Plugin Status"
-msgstr "Resurs-plugin status"
+msgstr ""
 
 #: includes/class-tornevall-toolbox-resurs-admin-page.php
 msgid "Status:"
-msgstr "Status:"
+msgstr ""
 
 #: includes/class-tornevall-toolbox-resurs-admin-page.php
 msgid "Active"
-msgstr "Aktiv"
+msgstr ""
 
 #: includes/class-tornevall-toolbox-resurs-admin-page.php
 msgid "Installed (inactive)"
-msgstr "Installerad (inaktiv)"
+msgstr ""
 
 #: includes/class-tornevall-toolbox-resurs-admin-page.php
 msgid "Not installed"
-msgstr "Inte installerad"
+msgstr ""
 
 #: includes/class-tornevall-toolbox-resurs-admin-page.php
 msgid "Plugin file:"
-msgstr "Pluginfil:"
+msgstr ""
 
 #: includes/class-tornevall-toolbox-resurs-admin-page.php
 msgid "Version:"
-msgstr "Version:"
+msgstr ""
 
 #: includes/class-tornevall-toolbox-resurs-admin-page.php
 msgid "Check for Updates"
-msgstr "Kontrollera uppdateringar"
+msgstr ""
 
 #: includes/class-tornevall-toolbox-resurs-admin-page.php
 msgid "Latest version on Bitbucket:"
-msgstr "Senaste versionen på Bitbucket:"
+msgstr ""
 
 #: includes/class-tornevall-toolbox-resurs-admin-page.php
 msgid "An update is available!"
-msgstr "En uppdatering finns tillgänglig!"
+msgstr ""
 
 #: includes/class-tornevall-toolbox-resurs-admin-page.php
 msgid "Your version:"
-msgstr "Din version:"
+msgstr ""
 
 #: includes/class-tornevall-toolbox-resurs-admin-page.php
 msgid "View Release"
-msgstr "Visa release"
+msgstr ""
 
 #: includes/class-tornevall-toolbox-resurs-admin-page.php
 msgid "Development Version Detected"
-msgstr "Utvecklingsversion upptäckt"
+msgstr ""
 
 #: includes/class-tornevall-toolbox-resurs-admin-page.php
 msgid "You are running version"
-msgstr "Du kör version"
+msgstr ""
 
 #: includes/class-tornevall-toolbox-resurs-admin-page.php
 msgid "which is newer than the latest stable release"
-msgstr "som är nyare än senaste stabila release"
+msgstr ""
 
 #: includes/class-tornevall-toolbox-resurs-admin-page.php
 msgid "This could be:"
-msgstr "Detta kan vara:"
+msgstr ""
 
 #: includes/class-tornevall-toolbox-resurs-admin-page.php
 msgid "A development/pre-release version"
-msgstr "En utvecklings-/pre-release-version"
+msgstr ""
 
 #: includes/class-tornevall-toolbox-resurs-admin-page.php
 msgid "A hotfix not yet tagged on Bitbucket"
-msgstr "En hotfix som ännu inte är taggad på Bitbucket"
+msgstr ""
 
 #: includes/class-tornevall-toolbox-resurs-admin-page.php
 msgid "An unreleased update from Resurs Bank"
-msgstr "En ej släppt uppdatering från Resurs Bank"
+msgstr ""
 
 #: includes/class-tornevall-toolbox-resurs-admin-page.php
 msgid "If you did not intentionally upgrade, please verify your installation."
-msgstr "Om du inte medvetet uppgraderade, kontrollera din installation."
+msgstr ""
 
 #: includes/class-tornevall-toolbox-resurs-admin-page.php
 msgid "You are running the latest stable version!"
-msgstr "Du kör senaste stabila versionen!"
+msgstr ""
 
 #: includes/class-tornevall-toolbox-resurs-admin-page.php
 msgid "Error checking version:"
-msgstr "Fel vid kontroll av version:"
+msgstr ""
 
 #: includes/class-tornevall-toolbox-resurs-admin-page.php
 msgid "Error:"
-msgstr "Fel:"
+msgstr ""
 
 #: includes/class-tornevall-toolbox-resurs-admin-page.php
 msgid "Failed to connect to the server"
-msgstr "Kunde inte ansluta till servern"
+msgstr ""
 
 #: includes/class-tornevall-toolbox-resurs.php
 msgid "Tornevalls Tools for Resurs Bank requires %s to be installed and active."
-msgstr "Tornevalls Tools for Resurs Bank kräver att %s är installerat och aktivt."
+msgstr ""
 
 #: includes/class-tornevall-toolbox-resurs.php
 msgid "WooCommerce"
-msgstr "WooCommerce"
+msgstr ""
 
 #: includes/class-ajax-handler.php
 msgid "Security check failed"
-msgstr "Säkerhetskontrollen misslyckades"
+msgstr ""
 
 #: includes/class-ajax-handler.php
 msgid "Insufficient permissions"
-msgstr "Otillräckliga behörigheter"
+msgstr ""
 
 #: includes/class-ajax-handler.php
 msgid "No installed version provided"
-msgstr "Ingen installerad version angiven"
+msgstr ""
 
 #: includes/class-tornevall-toolbox-resurs-admin-page.php
 msgid "DISCLAIMER:"
-msgstr "ANSVARSFRISKRIVNING:"
+msgstr ""
 
 #: includes/class-tornevall-toolbox-resurs-admin-page.php
 msgid "This plugin is NOT created, maintained, or endorsed by Resurs Bank."
-msgstr "Detta tillägg är INTE skapat, underhållet eller godkänt av Resurs Bank."
+msgstr ""
 
 #: includes/class-tornevall-toolbox-resurs-admin-page.php
 msgid "It is an independent third-party utility tool."
-msgstr "Det är ett fristående verktyg från tredje part."
+msgstr ""
 
 #: includes/class-tornevall-toolbox-resurs-settings.php
 msgid "Part Payment Widget Settings"
-msgstr "Inställningar för del-betalningswidget"
+msgstr ""
 
 #: includes/class-tornevall-toolbox-resurs-settings.php
 msgid "Control how the Part Payment widget is rendered on your site."
-msgstr "Kontrollera hur del-betalningswidgeten renderas på din webbplats."
+msgstr ""
 
 #: includes/class-tornevall-toolbox-resurs-settings.php
 msgid "Enable Shortcode Rendering"
-msgstr "Aktivera shortcode-rendering"
+msgstr ""
 
 #: includes/class-tornevall-toolbox-resurs-settings.php
 msgid "Disable default widget rendering and use shortcode instead"
-msgstr "Inaktivera standardwidgetrendering och använd shortcode istället"
+msgstr ""
 
 #: includes/class-tornevall-toolbox-resurs-settings.php
 msgid "When enabled, the Part Payment widget will not render automatically on product pages. Use the shortcode below instead."
-msgstr "När den är aktiverad kommer del-betalningswidgeten inte att renderas automatiskt på produktsidor. Använd shortcoden nedan istället."
+msgstr ""
 
 #: includes/class-tornevall-toolbox-resurs-settings.php
 msgid "Shortcode Name"
-msgstr "Shortcode-namn"
+msgstr ""
 
 #: includes/class-tornevall-toolbox-resurs-settings.php
 msgid "Use this shortcode on your pages:"
-msgstr "Använd denna shortcode på dina sidor:"
-
+msgstr ""
 

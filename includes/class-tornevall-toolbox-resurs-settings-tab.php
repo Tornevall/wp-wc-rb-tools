@@ -13,6 +13,7 @@ class Tornevall_Toolbox_Resurs_Settings_Tab {
     public static function register(): void {
         add_filter('woocommerce_settings_tabs_array', [self::class, 'add_tab'], 999);
         add_action('woocommerce_settings_tabs_' . self::TAB_KEY, [self::class, 'render']);
+        add_action('woocommerce_update_options_' . self::TAB_KEY, [Tornevall_Toolbox_Resurs_Settings::class, 'save_from_woocommerce']);
     }
 
     public static function add_tab(array $tabs): array {
