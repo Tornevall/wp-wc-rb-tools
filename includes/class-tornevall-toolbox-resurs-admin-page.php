@@ -67,67 +67,77 @@ class Tornevall_Toolbox_Resurs_Admin_Page {
                 </p>
             </div>
 
-            <div class="card">
-                <h2><?php esc_html_e('About This Plugin', 'tornevalls-tools-for-resurs-bank-payments'); ?></h2>
-                <p><?php esc_html_e('Tornevalls Toolbox for Resurs provides utility and status tools for WooCommerce implementations that use Resurs Bank.', 'tornevalls-tools-for-resurs-bank-payments'); ?></p>
-            </div>
+            <div class="tornevalls-resurs-cards">
+                <div class="card">
+                    <h2><?php esc_html_e('About This Plugin', 'tornevalls-tools-for-resurs-bank-payments'); ?></h2>
+                    <p><?php esc_html_e('Tornevalls Toolbox for Resurs provides utility and status tools for WooCommerce implementations that use Resurs Bank.', 'tornevalls-tools-for-resurs-bank-payments'); ?></p>
+                </div>
 
-            <div class="card">
-                <h2><?php esc_html_e('What This Does', 'tornevalls-tools-for-resurs-bank-payments'); ?></h2>
-                <ul>
-                    <li>✓ <?php esc_html_e('Currently nothing.', 'tornevalls-tools-for-resurs-bank-payments'); ?></li>
-                </ul>
-            </div>
+                <div class="card">
+                    <h2><?php esc_html_e('What This Does', 'tornevalls-tools-for-resurs-bank-payments'); ?></h2>
+                    <ul>
+                        <li>✓ <?php esc_html_e('Currently nothing.', 'tornevalls-tools-for-resurs-bank-payments'); ?></li>
+                    </ul>
+                </div>
 
-            <div class="card">
-                <h2><?php esc_html_e('What This Does NOT Do', 'tornevalls-tools-for-resurs-bank-payments'); ?></h2>
-                <ul>
-                    <li>✗ <?php esc_html_e('Process or handle real payments', 'tornevalls-tools-for-resurs-bank-payments'); ?></li>
-                    <li>✗ <?php esc_html_e('Store financial or payment credentials', 'tornevalls-tools-for-resurs-bank-payments'); ?></li>
-                    <li>✗ <?php esc_html_e('Replace or supplement the official Resurs plugin', 'tornevalls-tools-for-resurs-bank-payments'); ?></li>
-                    <li>✗ <?php esc_html_e('Make decisions on refunds, captures, or payment status', 'tornevalls-tools-for-resurs-bank-payments'); ?></li>
-                </ul>
-            </div>
+                <div class="card">
+                    <h2><?php esc_html_e('What This Does NOT Do', 'tornevalls-tools-for-resurs-bank-payments'); ?></h2>
+                    <ul>
+                        <li>✗ <?php esc_html_e('Process or handle real payments', 'tornevalls-tools-for-resurs-bank-payments'); ?></li>
+                        <li>✗ <?php esc_html_e('Store financial or payment credentials', 'tornevalls-tools-for-resurs-bank-payments'); ?></li>
+                        <li>✗ <?php esc_html_e('Replace or supplement the official Resurs plugin', 'tornevalls-tools-for-resurs-bank-payments'); ?></li>
+                        <li>✗ <?php esc_html_e('Make decisions on refunds, captures, or payment status', 'tornevalls-tools-for-resurs-bank-payments'); ?></li>
+                    </ul>
+                </div>
 
-            <div class="card">
-                <h2><?php esc_html_e('Resurs Plugin Status', 'tornevalls-tools-for-resurs-bank-payments'); ?></h2>
-                <?php if ($is_active): ?>
-                    <p><strong><?php esc_html_e('Status:', 'tornevalls-tools-for-resurs-bank-payments'); ?></strong> <span style="color: green;">✓ <?php esc_html_e('Active', 'tornevalls-tools-for-resurs-bank-payments'); ?></span></p>
-                <?php elseif ($is_installed): ?>
-                    <p><strong><?php esc_html_e('Status:', 'tornevalls-tools-for-resurs-bank-payments'); ?></strong> <span style="color: orange;">⚠ <?php esc_html_e('Installed (inactive)', 'tornevalls-tools-for-resurs-bank-payments'); ?></span></p>
-                <?php else: ?>
-                    <p><strong><?php esc_html_e('Status:', 'tornevalls-tools-for-resurs-bank-payments'); ?></strong> <span style="color: red;">✗ <?php esc_html_e('Not installed', 'tornevalls-tools-for-resurs-bank-payments'); ?></span></p>
-                <?php endif; ?>
+                <div class="card">
+                    <h2><?php esc_html_e('Resurs Plugin Status', 'tornevalls-tools-for-resurs-bank-payments'); ?></h2>
+                    <?php if ($is_active): ?>
+                        <p><strong><?php esc_html_e('Status:', 'tornevalls-tools-for-resurs-bank-payments'); ?></strong> <span style="color: green;">✓ <?php esc_html_e('Active', 'tornevalls-tools-for-resurs-bank-payments'); ?></span></p>
+                    <?php elseif ($is_installed): ?>
+                        <p><strong><?php esc_html_e('Status:', 'tornevalls-tools-for-resurs-bank-payments'); ?></strong> <span style="color: orange;">⚠ <?php esc_html_e('Installed (inactive)', 'tornevalls-tools-for-resurs-bank-payments'); ?></span></p>
+                    <?php else: ?>
+                        <p><strong><?php esc_html_e('Status:', 'tornevalls-tools-for-resurs-bank-payments'); ?></strong> <span style="color: red;">✗ <?php esc_html_e('Not installed', 'tornevalls-tools-for-resurs-bank-payments'); ?></span></p>
+                    <?php endif; ?>
 
-                <?php if (!empty($resurs_plugin_file)): ?>
-                    <p><strong><?php esc_html_e('Plugin file:', 'tornevalls-tools-for-resurs-bank-payments'); ?></strong> <?php echo esc_html($resurs_plugin_file); ?></p>
-                <?php endif; ?>
+                    <?php if (!empty($resurs_plugin_file)): ?>
+                        <p><strong><?php esc_html_e('Plugin file:', 'tornevalls-tools-for-resurs-bank-payments'); ?></strong> <?php echo esc_html($resurs_plugin_file); ?></p>
+                    <?php endif; ?>
 
-                <?php if (!empty($resurs_version)): ?>
-                    <p><strong><?php esc_html_e('Version:', 'tornevalls-tools-for-resurs-bank-payments'); ?></strong> <?php echo esc_html($resurs_version); ?></p>
+                    <?php if (!empty($resurs_version)): ?>
+                        <p><strong><?php esc_html_e('Version:', 'tornevalls-tools-for-resurs-bank-payments'); ?></strong> <?php echo esc_html($resurs_version); ?></p>
 
-                    <hr style="margin: 15px 0;">
+                        <hr style="margin: 15px 0;">
 
-                    <div id="version-check-container">
-                        <button
-                            type="button"
-                            class="button button-primary tornevalls-resurs-check-btn"
-                            id="check-version-btn"
-                            data-installed-version="<?php echo esc_attr($resurs_version); ?>"
-                            data-nonce="<?php echo esc_attr(wp_create_nonce('resurs_toolbox_nonce')); ?>"
-                        >
-                            <span class="tornevalls-resurs-check-label">
-                                <?php esc_html_e('Check for Updates', 'tornevalls-tools-for-resurs-bank-payments'); ?>
-                            </span>
-                            <span class="spinner" id="version-check-spinner" aria-hidden="true"></span>
-                        </button>
-                    </div>
+                        <div id="version-check-container">
+                            <button
+                                type="button"
+                                class="button button-primary tornevalls-resurs-check-btn"
+                                id="check-version-btn"
+                                data-installed-version="<?php echo esc_attr($resurs_version); ?>"
+                                data-nonce="<?php echo esc_attr(wp_create_nonce('resurs_toolbox_nonce')); ?>"
+                            >
+                                <span class="tornevalls-resurs-check-label">
+                                    <?php esc_html_e('Check for Updates', 'tornevalls-tools-for-resurs-bank-payments'); ?>
+                                </span>
+                                <span class="spinner" id="version-check-spinner" aria-hidden="true"></span>
+                            </button>
+                        </div>
 
-                    <div id="version-check-result" style="margin-top: 15px; display: none;"></div>
-                <?php endif; ?>
+                        <div id="version-check-result" style="margin-top: 15px; display: none;"></div>
+                    <?php endif; ?>
+                </div>
             </div>
 
             <style>
+                .tornevalls-resurs-cards {
+                    display: grid;
+                    gap: 16px;
+                    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+                }
+                .tornevalls-resurs-cards .card {
+                    margin: 0;
+                }
                 .tornevalls-resurs-check-btn {
                     display: inline-flex;
                     align-items: center;
@@ -138,12 +148,12 @@ class Tornevall_Toolbox_Resurs_Admin_Page {
                     display: inline-block;
                     float: none;
                     margin: 0 0 0 4px;
-                    width: 14px;
-                    height: 14px;
+                    width: 12px;
+                    height: 12px;
                     visibility: hidden;
                     vertical-align: middle;
-                    line-height: 14px;
-                    background-size: 14px 14px;
+                    line-height: 12px;
+                    background-size: 12px 12px;
                 }
                 .tornevalls-resurs-check-btn .spinner.is-active {
                     visibility: visible;
