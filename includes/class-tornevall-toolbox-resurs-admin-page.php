@@ -1,5 +1,7 @@
 <?php
 
+namespace Tornevalls\ToolboxResurs;
+
 if (!defined('ABSPATH')) {
     exit;
 }
@@ -47,7 +49,15 @@ class Tornevall_Toolbox_Resurs_Admin_Page {
         }
         ?>
         <div class="wrap">
-            <h1><?php echo esc_html(get_admin_page_title()); ?></h1>
+            <style>
+                /* Hide the generic WooCommerce Settings title on this specific tab. */
+                .wrap > h1 {
+                    display: none;
+                }
+            </style>
+            <h1 class="tornevalls-resurs-title">
+                <?php esc_html_e('Tornevalls Toolbox for Resurs Bank', 'tornevalls-tools-for-resurs-bank-payments'); ?>
+            </h1>
 
             <div class="notice notice-warning">
                 <p>
@@ -106,7 +116,6 @@ class Tornevall_Toolbox_Resurs_Admin_Page {
                             data-installed-version="<?php echo esc_attr($resurs_version); ?>"
                             data-nonce="<?php echo esc_attr(wp_create_nonce('resurs_toolbox_nonce')); ?>"
                         >
-                            <span class="dashicons dashicons-update" aria-hidden="true"></span>
                             <span class="tornevalls-resurs-check-label">
                                 <?php esc_html_e('Check for Updates', 'tornevalls-tools-for-resurs-bank-payments'); ?>
                             </span>
@@ -123,23 +132,24 @@ class Tornevall_Toolbox_Resurs_Admin_Page {
                     display: inline-flex;
                     align-items: center;
                     gap: 6px;
+                    line-height: 1;
                 }
                 .tornevalls-resurs-check-btn .spinner {
+                    display: inline-block;
                     float: none;
-                    margin: 0;
+                    margin: 0 0 0 4px;
+                    width: 14px;
+                    height: 14px;
                     visibility: hidden;
+                    vertical-align: middle;
+                    line-height: 14px;
+                    background-size: 14px 14px;
                 }
-                .tornevalls-resurs-check-btn.is-busy .spinner {
+                .tornevalls-resurs-check-btn .spinner.is-active {
                     visibility: visible;
                 }
-                .tornevalls-resurs-check-btn .dashicons {
-                    width: 16px;
-                    height: 16px;
-                    font-size: 16px;
-                    line-height: 16px;
-                }
-                .tornevalls-resurs-check-btn.is-busy .dashicons {
-                    opacity: 0.5;
+                .tornevalls-resurs-check-btn .tornevalls-resurs-check-label {
+                    line-height: 1;
                 }
             </style>
 
@@ -174,7 +184,7 @@ class Tornevall_Toolbox_Resurs_Admin_Page {
 
                 function setLoading(isLoading) {
                     if (spinner) {
-                        spinner.style.display = '';
+                        spinner.classList.toggle('is-active', isLoading);
                     }
                     if (btn) {
                         btn.disabled = isLoading;

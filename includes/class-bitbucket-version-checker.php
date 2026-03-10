@@ -1,5 +1,7 @@
 <?php
 
+namespace Tornevalls\ToolboxResurs;
+
 if (!defined('ABSPATH')) {
     exit;
 }
@@ -170,4 +172,3 @@ class Tornevall_Bitbucket_Version_Checker {
         // No cache to clear - always fetching live data from Bitbucket
     }
 }
-

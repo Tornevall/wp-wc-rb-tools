@@ -1,5 +1,7 @@
 <?php
 
+namespace Tornevalls\ToolboxResurs;
+
 if (!defined('ABSPATH')) {
     exit;
 }

@@ -17,6 +17,9 @@
  * It is an independent third-party utility tool.
  */
 
+use Tornevalls\ToolboxResurs\Tornevall_Resurs_AJAX_Handler;
+use Tornevalls\ToolboxResurs\Tornevall_Toolbox_Resurs;
+
 if (!defined('ABSPATH')) {
     exit;
 }

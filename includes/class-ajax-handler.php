@@ -1,5 +1,7 @@
 <?php
 
+namespace Tornevalls\ToolboxResurs;
+
 if (!defined('ABSPATH')) {
     exit;
 }
@@ -44,7 +46,7 @@ class Tornevall_Resurs_AJAX_Handler {
             }
 
             // Check for updates
-            if (!class_exists('Tornevall_Bitbucket_Version_Checker')) {
+            if (!class_exists(__NAMESPACE__ . '\\Tornevall_Bitbucket_Version_Checker')) {
                 require_once plugin_dir_path(__FILE__) . 'class-bitbucket-version-checker.php';
             }
 
