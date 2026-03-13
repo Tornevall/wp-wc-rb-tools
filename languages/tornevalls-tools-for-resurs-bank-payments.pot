@@ -93,7 +93,7 @@ msgid "Your version:"
 msgstr ""
 
 #: includes/class-tornevall-toolbox-resurs-admin-page.php
-msgid "View Release"
+msgid "View Bitbucket Release"
 msgstr ""
 
 #: includes/class-tornevall-toolbox-resurs-admin-page.php

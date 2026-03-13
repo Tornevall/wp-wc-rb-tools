@@ -1,12 +1,10 @@
 <?php
 
-namespace Tornevalls\ToolboxResurs;
-
 if (!defined('ABSPATH')) {
     exit;
 }
 
-class Tornevall_Bitbucket_Version_Checker {
+class Tornevall_Resurs_Toolbox_Version_Checker {
     const BITBUCKET_API_URL = 'https://api.bitbucket.org/2.0/repositories/resursbankplugins/resursbank-woocommerce/refs/tags';
 
     /**
@@ -139,7 +137,6 @@ class Tornevall_Bitbucket_Version_Checker {
             'success' => true,
             'installed' => $installed_version,
             'latest' => $latest_version,
-            'latest_version' => $latest_version,
             'has_update' => $comparison < 0,
             'is_outdated' => $comparison < 0,
             'is_dev_version' => $comparison > 0,
@@ -172,3 +169,5 @@ class Tornevall_Bitbucket_Version_Checker {
         // No cache to clear - always fetching live data from Bitbucket
     }
 }
+
+

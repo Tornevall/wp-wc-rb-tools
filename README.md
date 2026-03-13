@@ -1,57 +1,105 @@
-# Tornevalls Toolbox for Resurs Bank
+# Tornevall Networks Toolbox for Resurs Bank Payments
 
-Independent utility plugin for WooCommerce with Resurs Bank integration. Not officially affiliated with or endorsed by Resurs Bank.
+Independent utility plugin for WooCommerce stores that use Resurs Bank Payments. This plugin is **not** created, maintained, supported, or endorsed by Resurs Bank.
 
 ## Disclaimer
 
-This plugin is NOT created, maintained, or supported by Resurs Bank. It is a community/independent utility tool.
+Tornevall Networks Toolbox for Resurs Bank Payments is a third-party/community utility plugin. It exists to provide support, inspection, and convenience features around the official Resurs Bank WooCommerce integration.
+
+It does **not** process payments, replace the official Resurs plugin, or make financial decisions on your behalf.
 
 ## Description
 
-Tornevalls Toolbox for Resurs is an independent developer and merchant utility plugin to support WooCommerce implementations that use Resurs Bank as a payment provider.
+This plugin adds a WooCommerce toolbox tab with Resurs-related status and helper functionality.
+
+The current implementation includes:
+
+- Resurs plugin status detection for common plugin entry files
+- Installed plugin file and version display
+- Bitbucket-based version check from the admin UI
+- Part Payment Widget settings in the toolbox tab
+- Optional shortcode/manual rendering mode for the Resurs part payment widget
+- Compatibility handling for legacy option names from the older plugin structure
 
 ## Requirements
 
 - WordPress 6.0+
 - WooCommerce 7.6.0+
 - PHP 8.1+
+- The official Resurs Bank plugin for full widget-related functionality
 
 ## Installation
 
-1. Upload to `/wp-content/plugins/tornevalls-tools-for-resurs-bank-payments/`
-2. Activate via the Plugins screen
-3. Go to **WooCommerce > Tornevalls Toolbox for Resurs Bank**
-4. (Optional) Follow the setup wizard if the Resurs plugin is not detected
+1. Upload or clone the plugin to:
+   `/wp-content/plugins/tornevall-networks-toolbox-for-resurs-bank-payments/`
+2. Activate it from the WordPress Plugins screen.
+3. In wp-admin, go to:
+   **WooCommerce → Settings → Tornevall Networks Toolbox for Resurs Bank Payments**
+4. If the official Resurs plugin is installed, the toolbox tab will show detected plugin file, version, and update status.
+
+## Part Payment Widget support
+
+The toolbox can control how the Resurs Part Payment Widget is rendered.
+
+### Default mode
+
+If shortcode rendering is **disabled**, the official Resurs plugin continues to render the widget in its normal automatic position on product pages.
+
+### Shortcode/manual mode
+
+If **Enable Shortcode Rendering** is turned on:
+
+- the default automatic part payment widget rendering is disabled
+- a shortcode is registered instead
+- you can place the widget manually where needed in your content/templates
+
+Default shortcode:
+
+```text
+[resurs_partpayment_widget]
+```
+
+The shortcode tag can be changed from the toolbox settings page.
+
+## Admin toolbox overview
+
+The WooCommerce toolbox tab currently contains:
+
+- **About This Plugin** card
+- **Resurs-plugin status** card with detected file/version info
+- **Check for Updates** button that compares the installed Resurs version with Bitbucket tags
+- **Part Payment Widget** settings card for shortcode/manual rendering
 
 ## Frequently Asked Questions
 
-**Do I need Resurs Bank official plugin?**
+### Do I need the official Resurs Bank plugin?
 
-This plugin is designed to work alongside the official Resurs Bank plugin for WooCommerce. You can install it without the official plugin, but it will be an empty shell without Resurs Bank integration features.
+Yes, for any Resurs-specific runtime behavior such as the Part Payment Widget. The toolbox can be activated without it, but most Resurs-specific functionality will have nothing to hook into.
 
-**Is this supported by Resurs Bank?**
+### Is this supported by Resurs Bank?
 
-No. Third-party developer tool. Not official.
+No. This is an independent third-party developer/merchant tool.
 
-**Can I use this in production?**
+### Does this plugin replace the official payment plugin?
 
-This is a utility/status tool. Use at your own discretion.
+No. It is only a toolbox layer around the official integration.
+
+### Can I use it in production?
+
+Yes, if you understand what it does. It is intended as a utility and inspection/helper plugin, not as a payment engine.
 
 ## Changelog
 
-### 1.0.0
-
-- Initial release
-- WooCommerce settings tab with Resurs plugin status
-- Bitbucket version check via admin UI
+See [`CHANGELOG.md`](./CHANGELOG.md).
 
 ## License
 
-GPLv2 or later. See `LICENSE` file.
+GPLv2 or later. See `LICENSE`.
 
 ## Author
 
-Tomas Tornevall — https://profiles.wordpress.org/tornevall/
+Tomas Tornevall  
+https://profiles.wordpress.org/tornevall/
 
 ---
 

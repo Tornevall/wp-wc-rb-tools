@@ -94,7 +94,7 @@ msgid "Your version:"
 msgstr "Din version:"
 
 #: includes/class-tornevall-toolbox-resurs-admin-page.php
-msgid "View Release"
+msgid "View Bitbucket Release"
 msgstr "Visa release"
 
 #: includes/class-tornevall-toolbox-resurs-admin-page.php
