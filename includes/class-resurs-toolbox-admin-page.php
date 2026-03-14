@@ -13,6 +13,7 @@ class Tornevall_Resurs_Toolbox_Admin_Page {
 
         // Initialize all variables first
         $resurs_plugin_file = '';
+        $resurs_plugin_data = [];
         $is_active = false;
         $is_installed = false;
         $resurs_version = '';
@@ -34,6 +35,7 @@ class Tornevall_Resurs_Toolbox_Admin_Page {
 
                 // Get plugin version
                 $plugin_data = get_plugin_data($plugin_path);
+                $resurs_plugin_data = is_array($plugin_data) ? $plugin_data : [];
                 $resurs_version = isset($plugin_data['Version']) ? $plugin_data['Version'] : '';
 
                 // Check if active
@@ -43,6 +45,9 @@ class Tornevall_Resurs_Toolbox_Admin_Page {
                 break;
             }
         }
+
+        $wordpress_plugin_url = self::get_wordpress_plugin_url($resurs_plugin_file, $resurs_plugin_data);
+        $plugins_manager_url = self::get_plugins_manager_url($resurs_plugin_file);
         ?>
         <div class="wrap">
             <style>
@@ -142,6 +147,8 @@ class Tornevall_Resurs_Toolbox_Admin_Page {
                                 id="check-version-btn"
                                 data-installed-version="<?php echo esc_attr($resurs_version); ?>"
                                 data-nonce="<?php echo esc_attr(wp_create_nonce('tornevall_resurs_toolbox_nonce')); ?>"
+                                data-wordpress-plugin-url="<?php echo esc_url($wordpress_plugin_url); ?>"
+                                data-plugins-manager-url="<?php echo esc_url($plugins_manager_url); ?>"
                             >
                                 <span><?php esc_html_e('Check for Updates', 'tornevall-networks-toolbox-for-resurs-bank-payments'); ?></span>
                                 <span class="spinner" id="version-check-spinner" aria-hidden="true"></span>
@@ -185,6 +192,8 @@ class Tornevall_Resurs_Toolbox_Admin_Page {
                     updateAvailable: <?php echo wp_json_encode(__('An update is available!', 'tornevall-networks-toolbox-for-resurs-bank-payments')); ?>,
                     yourVersion: <?php echo wp_json_encode(__('Your version:', 'tornevall-networks-toolbox-for-resurs-bank-payments')); ?>,
                     viewRelease: <?php echo wp_json_encode(__('View Bitbucket Release', 'tornevall-networks-toolbox-for-resurs-bank-payments')); ?>,
+                    viewOnWordPress: <?php echo wp_json_encode(__('View on WordPress.com', 'tornevall-networks-toolbox-for-resurs-bank-payments')); ?>,
+                    upgradeInPlugins: <?php echo wp_json_encode(__('Upgrade in Plugins', 'tornevall-networks-toolbox-for-resurs-bank-payments')); ?>,
                     devDetected: <?php echo wp_json_encode(__('Development Version Detected', 'tornevall-networks-toolbox-for-resurs-bank-payments')); ?>,
                     runningVersion: <?php echo wp_json_encode(__('You are running version', 'tornevall-networks-toolbox-for-resurs-bank-payments')); ?>,
                     newerThanStable: <?php echo wp_json_encode(__('which is newer than the latest stable release', 'tornevall-networks-toolbox-for-resurs-bank-payments')); ?>,
@@ -201,6 +210,46 @@ class Tornevall_Resurs_Toolbox_Admin_Page {
 
                 var resultDiv = document.getElementById('version-check-result');
                 var spinner = document.getElementById('version-check-spinner');
+                var wordpressPluginUrl = btn.getAttribute('data-wordpress-plugin-url') || '';
+                var pluginsManagerUrl = btn.getAttribute('data-plugins-manager-url') || '';
+
+                function buildActionButton(url, label, isExternal) {
+                    if (!url) {
+                        return '';
+                    }
+
+                    var attrs = ' class="button button-secondary"';
+                    if (isExternal) {
+                        attrs += ' target="_blank" rel="noopener noreferrer"';
+                    }
+
+                    return '<a href="' + url + '"' + attrs + '>' + label + '</a>';
+                }
+
+                function buildActionButtons(data) {
+                    var buttons = [];
+                    var releaseUrl = 'https://bitbucket.org/resursbankplugins/resursbank-woocommerce/src/' + encodeURIComponent(data.latest || '') + '/';
+
+                    buttons.push(buildActionButton(releaseUrl, messages.viewRelease, true));
+
+                    if (wordpressPluginUrl) {
+                        buttons.push(buildActionButton(wordpressPluginUrl, messages.viewOnWordPress, true));
+                    }
+
+                    if (pluginsManagerUrl) {
+                        buttons.push(buildActionButton(pluginsManagerUrl, messages.upgradeInPlugins, false));
+                    }
+
+                    buttons = buttons.filter(function(button) {
+                        return button !== '';
+                    });
+
+                    if (!buttons.length) {
+                        return '';
+                    }
+
+                    return '<p style="display:flex; gap:8px; flex-wrap:wrap; margin-top:12px;">' + buttons.join('') + '</p>';
+                }
 
                 function setLoading(isLoading) {
                     if (spinner) {
@@ -242,7 +291,7 @@ class Tornevall_Resurs_Toolbox_Admin_Page {
                         if (data.is_outdated) {
                             html += '<p style="color: #d63638;"><strong>⚠️ ' + messages.updateAvailable + '</strong></p>';
                             html += '<p>' + messages.yourVersion + ' ' + (data.installed || '') + '</p>';
-                            html += '<p><a href="https://bitbucket.org/resursbankplugins/resursbank-woocommerce/src/' + (data.latest || '') + '/" target="_blank" class="button button-secondary">' + messages.viewRelease + '</a></p>';
+                            html += buildActionButtons(data);
                         } else if (data.is_dev_version) {
                             html += '<p style="color: #2f7c31;"><strong>📦 ' + messages.devDetected + '</strong></p>';
                             html += '<p>' + messages.runningVersion + ' <strong>' + (data.installed || '') + '</strong>, ' + messages.newerThanStable + ' (' + (data.latest || '') + ').</p>';
@@ -304,6 +353,37 @@ class Tornevall_Resurs_Toolbox_Admin_Page {
             </script>
         </div>
         <?php
+    }
+
+    private static function get_wordpress_plugin_url(string $resurs_plugin_file, array $plugin_data = []): string {
+        if (0 === strpos($resurs_plugin_file, 'resurs-bank-payments-for-woocommerce/')) {
+            return 'https://wordpress.com/plugins/resurs-bank-payments-for-woocommerce';
+        }
+
+        if (!empty($plugin_data['PluginURI']) && is_string($plugin_data['PluginURI'])) {
+            return $plugin_data['PluginURI'];
+        }
+
+        return '';
+    }
+
+    private static function get_plugins_manager_url(string $resurs_plugin_file): string {
+        if ('' === $resurs_plugin_file) {
+            return '';
+        }
+
+        $search_term = dirname($resurs_plugin_file);
+        if ('' === $search_term || '.' === $search_term) {
+            $search_term = $resurs_plugin_file;
+        }
+
+        return add_query_arg(
+            [
+                'plugin_status' => 'all',
+                's' => $search_term,
+            ],
+            self_admin_url('plugins.php')
+        );
     }
 }
 

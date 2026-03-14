@@ -47,6 +47,7 @@ class Tornevall_Resurs_Toolbox_Plugin {
     }
 
 
+
     public function woocommerce_missing_notice() {
         ?>
         <div class="notice notice-error">

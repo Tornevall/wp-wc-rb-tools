@@ -135,8 +135,8 @@ class Tornevall_Resurs_Toolbox_Settings {
             return;
         }
 
-        $enabledRaw = $_POST[self::OPTION_PP_SHORTCODE_ENABLED] ?? '0';
-        $nameRaw = $_POST[self::OPTION_PP_SHORTCODE_NAME] ?? self::DEFAULT_SHORTCODE_NAME;
+        $enabledRaw = filter_input(INPUT_POST, self::OPTION_PP_SHORTCODE_ENABLED, FILTER_UNSAFE_RAW);
+        $nameRaw = filter_input(INPUT_POST, self::OPTION_PP_SHORTCODE_NAME, FILTER_UNSAFE_RAW);
 
         $enabled = self::sanitize_enabled(is_string($enabledRaw) ? wp_unslash($enabledRaw) : '0');
         $shortcodeName = self::sanitize_shortcode_name(is_string($nameRaw) ? wp_unslash($nameRaw) : self::DEFAULT_SHORTCODE_NAME);

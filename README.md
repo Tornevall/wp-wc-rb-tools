@@ -17,9 +17,11 @@ The current implementation includes:
 - Resurs plugin status detection for common plugin entry files
 - Installed plugin file and version display
 - Bitbucket-based version check from the admin UI
+- WordPress.com plugin-page link and an upgrade shortcut into the WordPress Plugins screen when a newer Resurs release is detected
 - Part Payment Widget settings in the toolbox tab
 - Optional shortcode/manual rendering mode for the Resurs part payment widget
 - Compatibility handling for legacy option names from the older plugin structure
+- Updated bundled Swedish translations for the current plugin name and admin UI
 
 ## Requirements
 
@@ -68,6 +70,7 @@ The WooCommerce toolbox tab currently contains:
 - **About This Plugin** card
 - **Resurs-plugin status** card with detected file/version info
 - **Check for Updates** button that compares the installed Resurs version with Bitbucket tags
+- update result actions for **View Bitbucket Release**, **View on WordPress.com**, and **Upgrade in Plugins**
 - **Part Payment Widget** settings card for shortcode/manual rendering
 
 ## Frequently Asked Questions

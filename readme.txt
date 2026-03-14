@@ -26,8 +26,10 @@ Current toolbox features include:
 * Resurs plugin status detection for common plugin file variants.
 * Installed plugin file and version display in the WooCommerce toolbox tab.
 * Bitbucket-based version checking from the admin interface.
+* WordPress.com plugin-page link and an "Upgrade in Plugins" shortcut when a newer Resurs release is detected.
 * Part Payment Widget settings with optional shortcode/manual rendering mode.
 * Support for a configurable shortcode tag, defaulting to `[resurs_partpayment_widget]`.
+* Updated bundled Swedish translations for the current plugin name and UI text.
 
 == Installation ==
 
@@ -65,6 +67,10 @@ The default shortcode is `[resurs_partpayment_widget]`, but the shortcode name c
 * Restored the widget settings card in the WooCommerce toolbox tab.
 * Improved Resurs plugin status detection for multiple known plugin file variants.
 * Kept compatibility with legacy shortcode option names during migration to the new naming convention.
+* Added a WordPress.com plugin-page link in the Resurs update result UI.
+* Added an "Upgrade in Plugins" action that opens the WordPress plugin manager for the detected Resurs plugin.
+* Fixed bundled translation loading for the current plugin text domain.
+* Rebuilt the bundled Swedish translation files to match the current plugin name and UI text.
 
 = 1.0.0 =
 * Initial release

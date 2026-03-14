@@ -10,6 +10,8 @@
 - Added shortcode/manual rendering mode for the Resurs Part Payment Widget.
 - Added support for a configurable shortcode tag, defaulting to `resurs_partpayment_widget`.
 - Added compatibility handling for legacy shortcode option names from the older plugin structure.
+- Added a WordPress.com plugin-page link in the Resurs update result UI.
+- Added an "Upgrade in Plugins" action that opens the WordPress plugin manager for the detected Resurs plugin.
 
 ### Changed
 
@@ -22,6 +24,8 @@
 - Restored saving of Part Payment Widget settings from the WooCommerce settings tab.
 - Restored disabling of the official automatic widget rendering when shortcode/manual mode is enabled.
 - Fixed the Resurs plugin file detection used when placing the toolbox tab relative to the official Resurs settings tab.
+- Fixed bundled translation loading for the current plugin text domain.
+- Rebuilt the bundled Swedish translation files to match the current plugin name and UI text.
 
 ## 1.0.0
 
