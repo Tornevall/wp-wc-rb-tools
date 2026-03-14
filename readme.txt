@@ -60,18 +60,6 @@ The default shortcode is `[resurs_partpayment_widget]`, but the shortcode name c
 
 == Changelog ==
 
-= Unreleased =
-* Restored the Part Payment Widget module in the current plugin structure.
-* Added shortcode/manual rendering mode for the Part Payment Widget.
-* Added configurable shortcode name handling in the toolbox settings.
-* Restored the widget settings card in the WooCommerce toolbox tab.
-* Improved Resurs plugin status detection for multiple known plugin file variants.
-* Kept compatibility with legacy shortcode option names during migration to the new naming convention.
-* Added a WordPress.com plugin-page link in the Resurs update result UI.
-* Added an "Upgrade in Plugins" action that opens the WordPress plugin manager for the detected Resurs plugin.
-* Fixed bundled translation loading for the current plugin text domain.
-* Rebuilt the bundled Swedish translation files to match the current plugin name and UI text.
-
 = 1.0.0 =
 * Initial release
 * WooCommerce toolbox/settings tab integration.
@@ -82,7 +70,16 @@ The default shortcode is `[resurs_partpayment_widget]`, but the shortcode name c
 * Standardized internal constants, class names, AJAX action names, and nonce names.
 * Refreshed admin labels and readme branding to match the new product name.
 * Applied WordPress plugin-check compliance fixes and validation updates.
-
+* Restored the Part Payment Widget module in the current plugin structure.
+* Added shortcode/manual rendering mode for the Part Payment Widget.
+* Added configurable shortcode name handling in the toolbox settings.
+* Restored the widget settings card in the WooCommerce toolbox tab.
+* Improved Resurs plugin status detection for multiple known plugin file variants.
+* Kept compatibility with legacy shortcode option names during migration to the new naming convention.
+* Added a WordPress.com plugin-page link in the Resurs update result UI.
+* Added an "Upgrade in Plugins" action that opens the WordPress plugin manager for the detected Resurs plugin.
+* Fixed bundled translation loading for the current plugin text domain.
+* Rebuilt the bundled Swedish translation files to match the current plugin name and UI text.
 
 == License ==
 
