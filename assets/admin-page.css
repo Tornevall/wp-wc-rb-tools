@@ -1,0 +1,60 @@
+.wrap > h1 {
+    display: none;
+}
+
+.tornevall-resurs-toolbox-cards {
+    display: grid;
+    gap: 20px;
+    grid-template-columns: 1fr 1fr;
+    margin-top: 20px;
+}
+
+.tornevall-resurs-toolbox-cards .card {
+    margin: 0;
+    max-width: none;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.tornevall-resurs-toolbox-cards .card--wide {
+    grid-column: 1 / -1;
+    max-width: 50%;
+}
+
+.tornevall-resurs-toolbox-check-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    line-height: 1;
+}
+
+.tornevall-resurs-toolbox-check-btn .spinner {
+    display: inline-block;
+    float: none;
+    margin: 0 0 0 4px;
+    width: 12px;
+    height: 12px;
+    visibility: hidden;
+    vertical-align: middle;
+    line-height: 12px;
+    background-size: 12px 12px;
+}
+
+.tornevall-resurs-toolbox-check-btn .spinner.is-active {
+    visibility: visible;
+}
+
+.tornevall-resurs-toolbox-submit {
+    margin-top: 16px;
+}
+
+@media (max-width: 960px) {
+    .tornevall-resurs-toolbox-cards {
+        grid-template-columns: 1fr;
+    }
+
+    .tornevall-resurs-toolbox-cards .card--wide {
+        max-width: 100%;
+    }
+}
+

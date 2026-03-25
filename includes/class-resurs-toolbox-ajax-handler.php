@@ -18,6 +18,14 @@ class Tornevall_Resurs_Toolbox_Ajax_Handler {
      */
     public static function check_version() {
         try {
+            // First check: user permissions
+            if (!current_user_can('manage_woocommerce')) {
+                wp_send_json_error([
+                    'message' => __('Insufficient permissions', 'tornevall-networks-toolbox-for-resurs-bank-payments'),
+                ], 403);
+            }
+
+            // Second check: nonce validation (CSRF protection)
             $nonce = isset($_POST['nonce']) ? sanitize_text_field(wp_unslash($_POST['nonce'])) : '';
             if (!$nonce || !wp_verify_nonce($nonce, 'tornevall_resurs_toolbox_nonce')) {
                 wp_send_json_error([
@@ -25,13 +33,7 @@ class Tornevall_Resurs_Toolbox_Ajax_Handler {
                 ], 403);
             }
 
-            // Check capabilities
-            if (!current_user_can('manage_woocommerce')) {
-                wp_send_json_error([
-                    'message' => __('Insufficient permissions', 'tornevall-networks-toolbox-for-resurs-bank-payments'),
-                ], 403);
-            }
-
+            // Third check: required input validation
             $installed_version = isset($_POST['installed_version']) ? sanitize_text_field(wp_unslash($_POST['installed_version'])) : '';
 
             if (empty($installed_version)) {

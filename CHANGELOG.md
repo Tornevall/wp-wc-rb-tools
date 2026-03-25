@@ -1,5 +1,20 @@
 # Changelog
 
+## Unreleased
+
+## 1.0.1
+
+### Fixed
+
+- Replaced raw inline `<style>` and `<script>` tags on the WooCommerce toolbox admin tab with proper WordPress admin asset loading via `admin_enqueue_scripts`, `wp_register_*`, `wp_enqueue_*`, and `wp_add_inline_script()`.
+- Scoped toolbox admin CSS/JS so they only load on `WooCommerce → Settings → Tornevall Networks Toolbox for Resurs Bank Payments`.
+- Fixed hardcoded filesystem path in `class-resurs-toolbox-admin-page.php` by replacing `WP_PLUGIN_DIR . '/' . $slug` with `trailingslashit(WP_PLUGIN_DIR) . $slug` for proper WordPress path handling across different server configurations.
+- Enhanced security in `class-resurs-toolbox-settings.php::save_from_woocommerce()` by using explicit `wp_die()` with user-friendly error messages for failed nonce and permission checks, ensuring unauthorized requests are clearly rejected rather than silently ignored.
+- Improved AJAX security in `class-resurs-toolbox-ajax-handler.php` by reordering security checks: permission check now runs before nonce validation (per WordPress best practices), with clear comments documenting each security layer.
+- Replaced `filter_input(..., FILTER_UNSAFE_RAW)` in `save_from_woocommerce()` with WordPress-idiomatic `sanitize_text_field(wp_unslash($_POST[...]))` for both the enabled flag and shortcode name fields, satisfying WordPress "sanitize early" requirements and eliminating `FILTER_UNSAFE_RAW` / `FILTER_DEFAULT` usage.
+- Fixed unescaped output in `woocommerce_missing_notice()`: wrapped `__()` with `wp_kses_post()` so the translated format string is escaped before being passed to `printf()`. `esc_html__()` is not applicable here because the `%s` placeholder is replaced with a `<strong>` tag that must be allowed through; `wp_kses_post()` permits safe HTML tags while stripping unsafe markup.
+- Stopped dual-writing legacy option keys (`tornevalls_resurs_pp_shortcode_*`) during settings save. Legacy keys remain read-only for migration/fallback, while canonical writes now only target `tornevall_resurs_toolbox_*` options.
+
 ## 1.0.0
 
 ### Added

@@ -126,26 +126,47 @@ class Tornevall_Resurs_Toolbox_Settings {
     }
 
     public static function save_from_woocommerce(): void {
+        // First check: user permissions
         if (!current_user_can('manage_woocommerce')) {
-            return;
+            wp_die(
+                esc_html__('You do not have permission to save settings.', 'tornevall-networks-toolbox-for-resurs-bank-payments'),
+                esc_html__('Insufficient Permissions', 'tornevall-networks-toolbox-for-resurs-bank-payments'),
+                [
+                    'response' => 403,
+                    'back_link' => true,
+                ]
+            );
         }
 
+        // Second check: nonce validation (security token)
         $nonce = isset($_POST[self::SETTINGS_NONCE_NAME]) ? sanitize_text_field(wp_unslash($_POST[self::SETTINGS_NONCE_NAME])) : '';
         if ('' === $nonce || !wp_verify_nonce($nonce, self::SETTINGS_NONCE_ACTION)) {
-            return;
+            wp_die(
+                esc_html__('Security check failed. Please try again.', 'tornevall-networks-toolbox-for-resurs-bank-payments'),
+                esc_html__('Security Error', 'tornevall-networks-toolbox-for-resurs-bank-payments'),
+                [
+                    'response' => 403,
+                    'back_link' => true,
+                ]
+            );
         }
 
-        $enabledRaw = filter_input(INPUT_POST, self::OPTION_PP_SHORTCODE_ENABLED, FILTER_UNSAFE_RAW);
-        $nameRaw = filter_input(INPUT_POST, self::OPTION_PP_SHORTCODE_NAME, FILTER_UNSAFE_RAW);
+        // Both checks passed: proceed with data processing
+        // Enabled flag: expects '0' or '1' (hidden/checkbox pair) — sanitize immediately on read
+        $enabledRaw = isset($_POST[self::OPTION_PP_SHORTCODE_ENABLED])
+            ? sanitize_text_field(wp_unslash($_POST[self::OPTION_PP_SHORTCODE_ENABLED]))
+            : null;
 
-        $enabled = self::sanitize_enabled(is_string($enabledRaw) ? wp_unslash($enabledRaw) : '0');
-        $shortcodeName = self::sanitize_shortcode_name(is_string($nameRaw) ? wp_unslash($nameRaw) : self::DEFAULT_SHORTCODE_NAME);
+        // Shortcode name: free text further reduced to slug format by sanitize_shortcode_name()
+        $nameRaw = isset($_POST[self::OPTION_PP_SHORTCODE_NAME])
+            ? sanitize_text_field(wp_unslash($_POST[self::OPTION_PP_SHORTCODE_NAME]))
+            : null;
+
+        $enabled = self::sanitize_enabled($enabledRaw ?? '0');
+        $shortcodeName = self::sanitize_shortcode_name($nameRaw ?? self::DEFAULT_SHORTCODE_NAME);
 
         update_option(self::OPTION_PP_SHORTCODE_ENABLED, $enabled);
         update_option(self::OPTION_PP_SHORTCODE_NAME, $shortcodeName);
-
-        update_option(self::LEGACY_OPTION_PP_SHORTCODE_ENABLED, $enabled);
-        update_option(self::LEGACY_OPTION_PP_SHORTCODE_NAME, $shortcodeName);
     }
 }
 

@@ -7,7 +7,7 @@ Requires PHP: 8.1
 WC requires at least: 7.6.0
 WC Tested up to: 10.6.1
 Requires Plugins: woocommerce
-Stable tag: 1.0.0
+Stable tag: 1.0.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -28,8 +28,22 @@ Current toolbox features include:
 * Bitbucket-based version checking from the admin interface.
 * WordPress.com plugin-page link and an "Upgrade in Plugins" shortcut when a newer Resurs release is detected.
 * Part Payment Widget settings with optional shortcode/manual rendering mode.
+* Admin CSS/JS loaded through proper WordPress admin enqueue hooks on the toolbox tab only.
 * Support for a configurable shortcode tag, defaulting to `[resurs_partpayment_widget]`.
 * Updated bundled Swedish translations for the current plugin name and UI text.
+
+== External Services ==
+
+This plugin connects to the Bitbucket API to check for available updates of the official Resurs Bank WooCommerce plugin. This is a convenience feature to inform administrators about new plugin versions.
+
+**Service:** Bitbucket API (api.bitbucket.org)
+**Purpose:** Check for the latest available version of the Resurs Bank WooCommerce plugin
+**Data sent:** When an administrator views the toolbox tab or manually triggers a version check, the plugin sends an HTTP GET request to Bitbucket's public API endpoint. No sensitive data is transmitted—only a standard API request to fetch publicly available version tags from the Resurs Bank plugin repository.
+**When:** Version checks are performed when the toolbox admin page is loaded or when manually refreshed by an administrator.
+**Frequency:** The plugin makes a request each time the toolbox page is accessed in the WordPress admin.
+
+**Bitbucket Terms of Service:** https://www.atlassian.com/legal/cloud-terms-of-service
+**Bitbucket Privacy Policy:** https://www.atlassian.com/legal/privacy
 
 == Installation ==
 
@@ -37,6 +51,15 @@ Current toolbox features include:
 2. Activate via Plugins screen
 3. Go to **WooCommerce > Settings > Tornevall Networks Toolbox for Resurs Bank Payments**
 4. Review the detected Resurs plugin status and configure widget behavior if needed
+
+== Security ==
+
+This plugin implements WordPress security best practices:
+
+* **Nonce Verification**: All form submissions (POST requests) are protected with WordPress nonces to prevent CSRF attacks.
+* **Permission Checks**: All admin actions require the `manage_woocommerce` capability, ensuring only authorized administrators can modify settings.
+* **Input Sanitization**: All user input is properly sanitized using WordPress functions.
+* **AJAX Security**: AJAX endpoints validate both user permissions and nonce tokens before processing data.
 
 == Frequently Asked Questions ==
 
@@ -59,6 +82,18 @@ If shortcode rendering is enabled, the plugin disables the default automatic Par
 The default shortcode is `[resurs_partpayment_widget]`, but the shortcode name can be changed from the toolbox tab.
 
 == Changelog ==
+
+= Unreleased =
+
+= 1.0.1 =
+* Replaced raw inline `<style>` and `<script>` tags on the toolbox admin page with proper WordPress admin enqueue usage.
+* Scoped toolbox admin CSS/JS so they only load on the WooCommerce toolbox settings tab.
+* Fixed plugin-path handling by replacing hardcoded plugin-dir concatenation with `trailingslashit(WP_PLUGIN_DIR)`.
+* Hardened settings save flow with explicit capability + nonce failure handling.
+* Improved AJAX security ordering and validation flow for version checks.
+* Replaced unsafe raw input reads with early WordPress sanitization in settings save.
+* Fixed late escaping of translated output in the WooCommerce missing-plugin admin notice.
+* Stopped writing legacy option keys on save; canonical option keys are now the only write target.
 
 = 1.0.0 =
 * Initial release
