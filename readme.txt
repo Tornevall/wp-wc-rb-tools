@@ -122,7 +122,7 @@ GPLv2 or later. See LICENSE file.
 
 == Author ==
 
-Tomas Tornevall — [www.tornevall.se](https://www.tornevall.se/)
+Thomas Tornevall — [www.tornevalls.se](https://www.tornevalls.se/)
 
 ---
 
