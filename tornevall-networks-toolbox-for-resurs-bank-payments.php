@@ -21,13 +21,25 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-// Define plugin constants
-define('TORNEVALL_RESURS_TOOLBOX_VERSION', '1.0.0');
-define('TORNEVALL_RESURS_TOOLBOX_PLUGIN_FILE', __FILE__);
-define('TORNEVALL_RESURS_TOOLBOX_PLUGIN_DIR', plugin_dir_path(__FILE__));
-define('TORNEVALL_RESURS_TOOLBOX_PLUGIN_URL', plugin_dir_url(__FILE__));
-define('TORNEVALL_RESURS_TOOLBOX_PLUGIN_BASENAME', plugin_basename(__FILE__));
-
+// Define plugin constants — version is read directly from this file's header
+// so readme.txt Stable tag and the header Version: are the only places to update.
+$tornevall_resurs_toolbox_header = get_file_data(__FILE__, ['Version' => 'Version'], 'plugin');
+if (!defined('TORNEVALL_RESURS_TOOLBOX_VERSION')) {
+    define('TORNEVALL_RESURS_TOOLBOX_VERSION', $tornevall_resurs_toolbox_header['Version'] ?: '0.0.0');
+}
+if (!defined('TORNEVALL_RESURS_TOOLBOX_PLUGIN_FILE')) {
+    define('TORNEVALL_RESURS_TOOLBOX_PLUGIN_FILE', __FILE__);
+}
+if (!defined('TORNEVALL_RESURS_TOOLBOX_PLUGIN_DIR')) {
+    define('TORNEVALL_RESURS_TOOLBOX_PLUGIN_DIR', plugin_dir_path(__FILE__));
+}
+if (!defined('TORNEVALL_RESURS_TOOLBOX_PLUGIN_URL')) {
+    define('TORNEVALL_RESURS_TOOLBOX_PLUGIN_URL', plugin_dir_url(__FILE__));
+}
+if (!defined('TORNEVALL_RESURS_TOOLBOX_PLUGIN_BASENAME')) {
+    define('TORNEVALL_RESURS_TOOLBOX_PLUGIN_BASENAME', plugin_basename(__FILE__));
+}
+unset($tornevall_resurs_toolbox_header);
 
 // Load core classes
 require_once TORNEVALL_RESURS_TOOLBOX_PLUGIN_DIR . 'includes/class-resurs-toolbox-version-checker.php';
