@@ -7,7 +7,7 @@ Requires PHP: 8.1
 WC requires at least: 7.6.0
 WC Tested up to: 10.6.1
 Requires Plugins: woocommerce
-Stable tag: 1.0.1
+Stable tag: 1.0.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -34,16 +34,21 @@ Current toolbox features include:
 
 == External Services ==
 
-This plugin connects to the Bitbucket API to check for available updates of the official Resurs Bank WooCommerce plugin. This is a convenience feature to inform administrators about new plugin versions.
+This plugin connects to one external service:
 
-**Service:** Bitbucket API (api.bitbucket.org)
-**Purpose:** Check for the latest available version of the Resurs Bank WooCommerce plugin
-**Data sent:** When an administrator views the toolbox tab or manually triggers a version check, the plugin sends an HTTP GET request to Bitbucket's public API endpoint. No sensitive data is transmitted—only a standard API request to fetch publicly available version tags from the Resurs Bank plugin repository.
-**When:** Version checks are performed when the toolbox admin page is loaded or when manually refreshed by an administrator.
-**Frequency:** The plugin makes a request each time the toolbox page is accessed in the WordPress admin.
+**Service:** Bitbucket REST API (Atlassian)
+**Endpoint:** `https://api.bitbucket.org/2.0/repositories/resursbankplugins/resursbank-woocommerce/refs/tags`
 
-**Bitbucket Terms of Service:** https://www.atlassian.com/legal/cloud-terms-of-service
-**Bitbucket Privacy Policy:** https://www.atlassian.com/legal/privacy
+This plugin connects to the Bitbucket REST API to check the latest available tag for the Resurs Bank Payments for WooCommerce plugin. This is used to help administrators compare the installed version with the latest available upstream version.
+
+A request is sent only when an administrator manually clicks "Check for Updates" in the toolbox settings tab.
+
+The request sends the current site's server IP address as part of the normal HTTPS request to the Bitbucket API. No customer or order data is sent by this feature.
+
+Bitbucket is provided by Atlassian.
+Terms of Service: https://www.atlassian.com/legal/cloud-terms-of-service
+Privacy Policy: https://www.atlassian.com/legal/privacy-policy
+
 
 == Installation ==
 
@@ -83,12 +88,17 @@ The default shortcode is `[resurs_partpayment_widget]`, but the shortcode name c
 
 == Changelog ==
 
-= Unreleased =
+= 1.0.2 =
+* Adjusted plugin path resolution to use plugin constants defined from the main plugin file, ensuring compatibility with WordPress directory handling across installations.
+* Corrected external-service disclosure text for the Bitbucket API integration: the version check request is only sent when an administrator manually clicks "Check for Updates" — not on settings page load.
+* Replaced manual `wp_verify_nonce()` conditional in settings save handler with `check_admin_referer()`, the WordPress-standard single-call nonce function recognised by plugin-review scanners.
+* Replaced manual `wp_verify_nonce()` conditional in the version-check AJAX handler with `check_ajax_referer()` for the same reason.
+* Reordered security checks in both handlers so that nonce validation runs before capability checks, following WordPress plugin-review recommendations.
 
 = 1.0.1 =
 * Replaced raw inline `<style>` and `<script>` tags on the toolbox admin page with proper WordPress admin enqueue usage.
 * Scoped toolbox admin CSS/JS so they only load on the WooCommerce toolbox settings tab.
-* Fixed plugin-path handling by replacing hardcoded plugin-dir concatenation with `trailingslashit(WP_PLUGIN_DIR)`.
+* Fixed hardcoded filesystem path in the Resurs plugin detector by using proper WordPress path helper functions instead of manual string concatenation.
 * Hardened settings save flow with explicit capability + nonce failure handling.
 * Improved AJAX security ordering and validation flow for version checks.
 * Replaced unsafe raw input reads with early WordPress sanitization in settings save.

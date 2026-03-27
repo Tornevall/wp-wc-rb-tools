@@ -1,6 +1,14 @@
 # Changelog
 
-## Unreleased
+## 1.0.2 - 2026-03-27
+
+### Fixed
+
+- Adjusted plugin path resolution to use plugin constants defined from the main plugin file, ensuring compatibility with WordPress directory handling across installations.
+- Corrected external-service disclosure in `readme.txt` and `README.md`: the Bitbucket version check request is only sent when an administrator manually clicks "Check for Updates" — not on settings page load.
+- Replaced manual `wp_verify_nonce()` conditional in `save_from_woocommerce()` with `check_admin_referer()` — the WordPress-standard single-call nonce check that static analysis tools and plugin-review scanners reliably recognise.
+- Replaced manual `wp_verify_nonce()` conditional in the `check_version` AJAX handler with `check_ajax_referer()` for the same reason.
+- Reordered security checks in both handlers so that nonce validation (CSRF protection) now runs before capability checks (`current_user_can()`), following WordPress plugin-review recommendations.
 
 ## 1.0.1
 
@@ -8,7 +16,7 @@
 
 - Replaced raw inline `<style>` and `<script>` tags on the WooCommerce toolbox admin tab with proper WordPress admin asset loading via `admin_enqueue_scripts`, `wp_register_*`, `wp_enqueue_*`, and `wp_add_inline_script()`.
 - Scoped toolbox admin CSS/JS so they only load on `WooCommerce → Settings → Tornevall Networks Toolbox for Resurs Bank Payments`.
-- Fixed hardcoded filesystem path in `class-resurs-toolbox-admin-page.php` by replacing `WP_PLUGIN_DIR . '/' . $slug` with `trailingslashit(WP_PLUGIN_DIR) . $slug` for proper WordPress path handling across different server configurations.
+- Fixed hardcoded filesystem path in the Resurs plugin detector by using proper WordPress path helper functions instead of manual string concatenation.
 - Enhanced security in `class-resurs-toolbox-settings.php::save_from_woocommerce()` by using explicit `wp_die()` with user-friendly error messages for failed nonce and permission checks, ensuring unauthorized requests are clearly rejected rather than silently ignored.
 - Improved AJAX security in `class-resurs-toolbox-ajax-handler.php` by reordering security checks: permission check now runs before nonce validation (per WordPress best practices), with clear comments documenting each security layer.
 - Replaced `filter_input(..., FILTER_UNSAFE_RAW)` in `save_from_woocommerce()` with WordPress-idiomatic `sanitize_text_field(wp_unslash($_POST[...]))` for both the enabled flag and shortcode name fields, satisfying WordPress "sanitize early" requirements and eliminating `FILTER_UNSAFE_RAW` / `FILTER_DEFAULT` usage.

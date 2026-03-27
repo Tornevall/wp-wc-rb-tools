@@ -2,7 +2,7 @@
 
 Independent utility plugin for WooCommerce stores that use Resurs Bank Payments. This plugin is **not** created, maintained, supported, or endorsed by Resurs Bank.
 
-Current release: **1.0.1**
+Current release: **1.0.2**
 
 ## Disclaimer
 
@@ -30,21 +30,21 @@ The current implementation includes:
 
 This plugin uses the following external service:
 
-### Bitbucket API
+### Bitbucket API (Atlassian)
 
-**Purpose:** The plugin checks for available updates of the official Resurs Bank WooCommerce plugin by querying Bitbucket's public API.
+- **Service URL:** `https://api.bitbucket.org/2.0/repositories/resursbankplugins/resursbank-woocommerce/refs/tags`
+- **Purpose:** Check the latest available tag for the Resurs Bank Payments for WooCommerce plugin, so administrators can compare the installed version with the latest available upstream version.
+- **When requests are made:**
+  - Only when an administrator manually clicks **Check for Updates** in the toolbox settings tab. No request is sent on page load.
+- **Data sent by this plugin:**
+  - HTTP `GET` request only.
+  - The site's server IP address is sent as part of the normal HTTPS connection to the Bitbucket API.
+  - No customer, order, payment, or personal profile data is sent by this feature.
+- **Data received/used:** Public tag/version metadata (version strings only).
 
-**When:** Version checks occur when an administrator:
-- Views the WooCommerce toolbox settings tab
-- Clicks the "Check for Updates" button
-
-**Data Sent:** The plugin sends HTTP GET requests to Bitbucket's public API endpoint to fetch publicly available version tags. No sensitive data is transmitted—only standard API requests to check for public releases.
-
-**Frequency:** Requests are made each time the toolbox page is accessed in the WordPress admin.
-
-**Service Links:**
-- [Bitbucket Terms of Service](https://www.atlassian.com/legal/cloud-terms-of-service)
-- [Bitbucket Privacy Policy](https://www.atlassian.com/legal/privacy)
+Service provider legal pages:
+- [Atlassian Cloud Terms of Service](https://www.atlassian.com/legal/cloud-terms-of-service)
+- [Atlassian Privacy Policy](https://www.atlassian.com/legal/privacy-policy)
 
 ## Requirements
 
@@ -102,17 +102,17 @@ Admin assets for this screen are loaded through WordPress admin enqueue hooks ra
 
 This plugin implements WordPress security best practices:
 
-- **Nonce Verification:** All form submissions (POST requests) are protected with WordPress nonces (`wp_verify_nonce()`), preventing Cross-Site Request Forgery (CSRF) attacks.
-- **Permission Checks:** All admin actions require the `manage_woocommerce` capability via `current_user_can()`, ensuring only authorized administrators can modify settings.
-- **Input Sanitization:** All user input from `$_POST` and `$_GET` is sanitized using WordPress functions (`sanitize_text_field()`, `filter_input()`, and `wp_unslash()`).
-- **AJAX Security:** AJAX endpoints (`wp_ajax_*`) validate both user permissions and nonce tokens before processing any data.
+- **Nonce Verification:** All form submissions are protected using `check_admin_referer()` and all AJAX endpoints use `check_ajax_referer()` — the WordPress-standard nonce check functions. This prevents Cross-Site Request Forgery (CSRF) attacks and is reliably recognised by WordPress plugin-review tools.
+- **Permission Checks:** After nonce verification passes, all admin actions require the `manage_woocommerce` capability via `current_user_can()`, ensuring only authorized administrators can modify settings.
+- **Input Sanitization:** All user input from `$_POST` is sanitized using WordPress functions (`sanitize_text_field()`, `sanitize_key()`, and `wp_unslash()`) before any use.
+- **AJAX Security:** AJAX endpoints (`wp_ajax_*`) validate nonce first (`check_ajax_referer()`), then user permissions, before processing any data.
 
-Example permission flow:
+Security check order in all handlers:
 
-1. **User Permission Check** → Does the user have `manage_woocommerce` capability?
-2. **Nonce Validation** → Is the request coming from the WordPress admin?
-3. **Input Validation** → Are the submitted values valid and safe?
-4. **Data Update** → Only if all checks pass, save the settings to the database.
+1. **Nonce Validation** → `check_admin_referer()` / `check_ajax_referer()` — verifies the request is legitimate and not a CSRF attack.
+2. **User Permission Check** → `current_user_can('manage_woocommerce')` — verifies only authorised users can proceed.
+3. **Input Validation** → Sanitize and validate submitted values.
+4. **Data Update** → Only if all checks pass, save to the database.
 
 For more information on WordPress security, see:
 - [WordPress Nonces](https://developer.wordpress.org/plugins/security/nonces/)

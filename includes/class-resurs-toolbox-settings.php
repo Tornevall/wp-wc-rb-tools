@@ -126,24 +126,14 @@ class Tornevall_Resurs_Toolbox_Settings {
     }
 
     public static function save_from_woocommerce(): void {
-        // First check: user permissions
+        // First check: nonce validation (CSRF protection) — must come before reading any input
+        check_admin_referer(self::SETTINGS_NONCE_ACTION, self::SETTINGS_NONCE_NAME);
+
+        // Second check: user permissions (authorization)
         if (!current_user_can('manage_woocommerce')) {
             wp_die(
                 esc_html__('You do not have permission to save settings.', 'tornevall-networks-toolbox-for-resurs-bank-payments'),
                 esc_html__('Insufficient Permissions', 'tornevall-networks-toolbox-for-resurs-bank-payments'),
-                [
-                    'response' => 403,
-                    'back_link' => true,
-                ]
-            );
-        }
-
-        // Second check: nonce validation (security token)
-        $nonce = isset($_POST[self::SETTINGS_NONCE_NAME]) ? sanitize_text_field(wp_unslash($_POST[self::SETTINGS_NONCE_NAME])) : '';
-        if ('' === $nonce || !wp_verify_nonce($nonce, self::SETTINGS_NONCE_ACTION)) {
-            wp_die(
-                esc_html__('Security check failed. Please try again.', 'tornevall-networks-toolbox-for-resurs-bank-payments'),
-                esc_html__('Security Error', 'tornevall-networks-toolbox-for-resurs-bank-payments'),
                 [
                     'response' => 403,
                     'back_link' => true,

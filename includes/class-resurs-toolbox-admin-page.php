@@ -26,9 +26,12 @@ class Tornevall_Resurs_Toolbox_Admin_Page {
             'resursbank-woocommerce/init.php',
         ];
 
+        // Resolve plugins root using WordPress helpers + plugin main file constant.
+        $plugins_root = trailingslashit(dirname(plugin_dir_path(TORNEVALL_RESURS_TOOLBOX_PLUGIN_FILE)));
+
         // Check each slug for installed/active status
         foreach ($resurs_slugs as $slug) {
-            $plugin_path = trailingslashit(WP_PLUGIN_DIR) . $slug;
+            $plugin_path = $plugins_root . ltrim($slug, '/');
             if (file_exists($plugin_path)) {
                 $is_installed = true;
                 $resurs_plugin_file = $slug;
