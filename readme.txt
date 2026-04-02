@@ -87,6 +87,14 @@ This is a utility/inspection tool. Use at your own discretion.
 If shortcode rendering is enabled, the plugin disables the default automatic Part Payment Widget rendering from the official Resurs plugin and registers a shortcode instead.
 The default shortcode is `[resurs_partpayment_widget]`, but the shortcode name can be changed from the toolbox tab.
 
+== Screenshots ==
+
+1. Toolbox tab overview in WooCommerce settings with plugin status and controls.
+2. Resurs plugin version-check result panel in the toolbox admin UI.
+3. Part Payment Widget shortcode/manual mode settings in the toolbox tab.
+4. Before: shortcode inserted in WooCommerce product description editor (`[resurs_partpayment_widget]`).
+5. After: rendered Resurs Part Payment widget visible on the product page description.
+
 == Changelog ==
 
 = 1.0.3 =
