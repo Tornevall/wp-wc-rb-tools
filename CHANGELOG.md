@@ -1,5 +1,18 @@
 # Changelog
 
+## 1.0.3 - 2026-04-02
+
+### Changed
+
+- Reworked Part Payment shortcode context detection so the shortcode now works in WooCommerce product description content and can resolve product context across more template/block flows.
+- Updated toolbox widget initialization flow to detect runtime product context earlier and keep shortcode rendering aligned with manual mode behavior.
+- Added/updated handoff through the `resursbank_pp_price_data` filter so module-resolved amount data can be provided to the Resurs widget when available.
+
+### Fixed
+
+- Improved shortcode stability when product context is not provided by the standard single-product global variables.
+- Kept automatic summary rendering disabled in shortcode/manual mode to avoid double-render conflicts.
+
 ## 1.0.2 - 2026-03-27
 
 ### Fixed

@@ -89,6 +89,13 @@ The default shortcode is `[resurs_partpayment_widget]`, but the shortcode name c
 
 == Changelog ==
 
+= 1.0.3 =
+* Reworked Part Payment shortcode context detection so the shortcode works in WooCommerce product description content and across more template/block flows.
+* Improved widget bootstrap/runtime context handling for shortcode/manual mode.
+* Added/updated handoff through the `resursbank_pp_price_data` filter so module-resolved amount data can be passed to the Resurs widget when available.
+* Improved shortcode stability when standard single-product globals are missing.
+* Kept automatic summary rendering disabled in shortcode/manual mode to avoid double-render conflicts.
+
 = 1.0.2 =
 * Adjusted plugin path resolution to use plugin constants defined from the main plugin file, ensuring compatibility with WordPress directory handling across installations.
 * Corrected external-service disclosure text for the Bitbucket API integration: the version check request is only sent when an administrator manually clicks "Check for Updates" — not on settings page load.
