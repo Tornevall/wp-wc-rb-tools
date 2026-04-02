@@ -6,6 +6,7 @@ Tested up to: 6.9
 Requires PHP: 8.1
 WC requires at least: 7.6.0
 WC Tested up to: 10.6.1
+Resurs Required: 1.2.30
 Requires Plugins: woocommerce
 Stable tag: 1.0.2
 License: GPLv2 or later
