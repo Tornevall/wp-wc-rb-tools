@@ -124,9 +124,11 @@ class Tornevall_Resurs_Toolbox_Admin_Page {
                             <td><?php Tornevall_Resurs_Toolbox_Settings::render_shortcode_name_field(); ?></td>
                         </tr>
                     </table>
+                    <!--
                     <div class="tornevall-resurs-toolbox-submit">
                         <?php submit_button(__('Save Changes', 'tornevall-networks-toolbox-for-resurs-bank-payments'), 'primary', 'save', false); ?>
                     </div>
+                    -->
                 </div>
             </div>
         </div>

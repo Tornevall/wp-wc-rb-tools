@@ -15,7 +15,6 @@ class Tornevall_Resurs_Toolbox_Part_Payment_Widget
         $shortcodeName = Tornevall_Resurs_Toolbox_Settings::get_shortcode_name();
 
         add_shortcode($shortcodeName, [self::class, 'render_shortcode']);
-
         add_action('wp', [self::class, 'detect_context'], 1);
 
         if ('1' === Tornevall_Resurs_Toolbox_Settings::get_shortcode_enabled()) {
@@ -76,6 +75,10 @@ class Tornevall_Resurs_Toolbox_Part_Payment_Widget
 
             self::$detectedProduct = self::resolve_product();
             self::$detectedProducts = self::resolve_products();
+
+            if ('0' === Tornevall_Resurs_Toolbox_Settings::get_shortcode_enabled()) {
+                return '';
+            }
 
             if (!self::has_product_context() && !self::is_cart_like_context()) {
                 return '';

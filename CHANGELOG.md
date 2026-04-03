@@ -1,5 +1,10 @@
 # Changelog
 
+# 1.0.4 - 2026-04-03
+
+- When widget shortcode is disabled, the shortcould should be emptied.
+- Extra save button in admin warns about changed form fields. This should not happen.
+
 ## 1.0.3 - 2026-04-02
 
 ### Changed
