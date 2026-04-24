@@ -20,11 +20,15 @@ class Tornevall_Resurs_Toolbox_Settings_Tab {
     }
 
     public static function add_tab(array $tabs): array {
+        if (Tornevall_Resurs_Toolbox_Settings::get_show_wc_settings_tab() !== '1') {
+            return $tabs;
+        }
+
         if (!function_exists('is_plugin_active')) {
             require_once ABSPATH . 'wp-admin/includes/plugin.php';
         }
 
-        $label = __('Tornevall Networks Toolbox for Resurs Bank Payments', 'tornevall-networks-toolbox-for-resurs-bank-payments');
+        $label = __('Resurs Toolbox', 'tornevall-networks-toolbox-for-resurs-bank-payments');
         $toolbox_tab = [self::TAB_KEY => $label];
 
         $resursPluginIsActive = false;
