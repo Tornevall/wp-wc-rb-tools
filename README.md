@@ -95,6 +95,7 @@ The WooCommerce toolbox tab currently contains:
 - **Check for Updates** button that compares the installed Resurs version with Bitbucket tags
 - update result actions for **View Bitbucket Release**, **View on WordPress.com**, and **Upgrade in Plugins**
 - **Part Payment Widget** settings card for shortcode/manual rendering
+- **Top Settings Tab** toggle to show/hide the toolbox in WooCommerce's top settings tabs
 
 Admin assets for this screen are loaded through WordPress admin enqueue hooks rather than raw inline `<style>`/`<script>` output.
 

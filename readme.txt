@@ -31,7 +31,7 @@ Current toolbox features include:
 * Part Payment Widget settings with optional shortcode/manual rendering mode.
 * Admin CSS/JS loaded through proper WordPress admin enqueue hooks on the toolbox tab only.
 * Support for a configurable shortcode tag, defaulting to `[resurs_partpayment_widget]`.
-* Updated bundled Swedish translations for the current plugin name and UI text.
+* Bundled Swedish translations for the plugin name and UI text.
 
 == External Services ==
 
@@ -96,6 +96,17 @@ The default shortcode is `[resurs_partpayment_widget]`, but the shortcode name c
 5. After: rendered Resurs Part Payment widget visible on the product page description.
 
 == Changelog ==
+
+= 1.0.5 =
+* Added Order Status Tester section in the toolbox admin tab, allowing administrators to manually update a WooCommerce order status directly from the Resurs Bank toolbox UI.
+* Added section tab navigation in the toolbox admin page (Dashboard / Order Status Tester).
+* Order Status Tester is automatically disabled when the Resurs environment is set to Production.
+* Added AJAX handler for order status updates with nonce and capability validation.
+* Updated bundled Swedish translations to cover all new Order Status Tester UI strings.
+
+= 1.0.4 =
+* Fixed shortcode emptying when Part Payment Widget shortcode is disabled, so the shortcode no longer renders stale content.
+* Fixed spurious "unsaved changes" warning triggered by the extra save button in admin when no form fields had actually changed.
 
 = 1.0.3 =
 * Reworked Part Payment shortcode context detection so the shortcode works in WooCommerce product description content and across more template/block flows.
