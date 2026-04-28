@@ -1,6 +1,15 @@
 # Changelog
 
-# 1.0.4 - 2026-04-03
+## 1.0.5 - 2026-04-28
+
+### Added
+
+- New **Order Status Tester** section in the toolbox admin tab, allowing administrators to manually update a WooCommerce order status from the Resurs Bank toolbox UI (disabled when Resurs environment is Production).
+- Section tab navigation in the toolbox admin page (Dashboard / Order Status Tester).
+- AJAX handler for order status updates with nonce and capability validation.
+- Swedish translations updated to cover all new Order Status Tester UI strings.
+
+## 1.0.4 - 2026-04-03
 
 - When widget shortcode is disabled, the shortcould should be emptied.
 - Extra save button in admin warns about changed form fields. This should not happen.
