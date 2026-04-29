@@ -8,7 +8,7 @@ WC requires at least: 7.6.0
 WC Tested up to: 10.6.1
 Resurs Required: 1.2.30
 Requires Plugins: woocommerce
-Stable tag: 1.0.4
+Stable tag: 1.0.5
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -31,11 +31,13 @@ Current toolbox features include:
 * Part Payment Widget settings with optional shortcode/manual rendering mode.
 * Admin CSS/JS loaded through proper WordPress admin enqueue hooks on the toolbox tab only.
 * Support for a configurable shortcode tag, defaulting to `[resurs_partpayment_widget]`.
+* A toolbox-side compatibility shim for the Resurs admin IP helper, so broken `ipv4.netcurl.org` lookups now go through `https://ipv4.fraudbl.org/` without editing the vendor plugin.
+* Updated bundled Swedish translations for the current plugin name and UI text.
 * Bundled Swedish translations for the plugin name and UI text.
 
 == External Services ==
 
-This plugin connects to one external service:
+This plugin connects to external services:
 
 **Service:** Bitbucket REST API (Atlassian)
 **Endpoint:** `https://api.bitbucket.org/2.0/repositories/resursbankplugins/resursbank-woocommerce/refs/tags`
@@ -49,6 +51,15 @@ The request sends the current site's server IP address as part of the normal HTT
 Bitbucket is provided by Atlassian.
 Terms of Service: https://www.atlassian.com/legal/cloud-terms-of-service
 Privacy Policy: https://www.atlassian.com/legal/privacy-policy
+
+**Service:** FraudBL IPv4 helper
+**Endpoint:** `https://ipv4.fraudbl.org/`
+
+This plugin also proxies the official Resurs admin `getRbIpInfo` helper call through the FraudBL IPv4 helper because the older `https://ipv4.netcurl.org/` endpoint no longer exists.
+
+A request is sent only when the Resurs admin UI explicitly triggers that helper check.
+
+The request sends the current site's server IP address as part of the normal HTTPS request to the FraudBL helper endpoint. No customer or order data is sent by this feature.
 
 
 == Installation ==

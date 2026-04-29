@@ -2,7 +2,7 @@
 
 Independent utility plugin for WooCommerce stores that use Resurs Bank Payments. This plugin is **not** created, maintained, supported, or endorsed by Resurs Bank.
 
-Current release: **1.0.2**
+Current release: **1.0.5**
 
 ## Disclaimer
 
@@ -24,11 +24,12 @@ The current implementation includes:
 - Admin CSS/JS loaded through proper WordPress admin enqueue hooks on the toolbox tab only
 - Optional shortcode/manual rendering mode for the Resurs part payment widget
 - Compatibility handling for legacy option names from the older plugin structure
+- A toolbox-side compatibility shim for the Resurs admin IP helper, so broken `ipv4.netcurl.org` requests are answered through `https://ipv4.fraudbl.org/` without editing the vendor plugin
 - Updated bundled Swedish translations for the current plugin name and admin UI
 
 ## External Services
 
-This plugin uses the following external service:
+This plugin uses the following external services:
 
 ### Bitbucket API (Atlassian)
 
@@ -45,6 +46,18 @@ This plugin uses the following external service:
 Service provider legal pages:
 - [Atlassian Cloud Terms of Service](https://www.atlassian.com/legal/cloud-terms-of-service)
 - [Atlassian Privacy Policy](https://www.atlassian.com/legal/privacy-policy)
+
+### FraudBL IPv4 helper
+
+- **Service URL:** `https://ipv4.fraudbl.org/`
+- **Purpose:** Answer the official Resurs plugin's `getRbIpInfo` admin helper call after the older `https://ipv4.netcurl.org/` endpoint disappeared.
+- **When requests are made:**
+  - Only when the WooCommerce/Resurs admin UI triggers the `getRbIpInfo` helper callback.
+- **Data sent by this plugin:**
+  - HTTP `GET` request only.
+  - The site's server IP address is sent as part of the normal HTTPS connection to the FraudBL helper endpoint.
+  - No customer, order, payment, or personal profile data is sent by this feature.
+- **Data received/used:** Public server/network diagnostics such as current IPv4 address, reverse host, and SSL protocol.
 
 ## Requirements
 

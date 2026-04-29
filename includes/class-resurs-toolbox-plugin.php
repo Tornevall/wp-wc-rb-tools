@@ -41,6 +41,7 @@ class Tornevall_Resurs_Toolbox_Plugin {
             return;
         }
 
+        add_action('woocommerce_api_wc_resurs_bank', ['Tornevall_Resurs_Toolbox_Ip_Info_Proxy', 'maybe_handle_request'], 0);
         add_action('admin_menu', [$this, 'register_woocommerce_submenu_link'], 99);
         add_action('admin_enqueue_scripts', [$this, 'enqueue_admin_assets']);
 
@@ -160,4 +161,3 @@ class Tornevall_Resurs_Toolbox_Plugin {
         <?php
     }
 }
-
