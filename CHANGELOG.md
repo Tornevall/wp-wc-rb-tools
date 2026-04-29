@@ -1,5 +1,10 @@
 # Changelog
 
+# 1.0.5 - 2026-04-28
+
+- Added a toolbox-side compatibility proxy for the Resurs admin `getRbIpInfo` helper call so stores no longer depend on the dead `https://ipv4.netcurl.org/` endpoint.
+- The toolbox now answers that callback from `https://ipv4.fraudbl.org/` instead, keeps the vendor plugin file untouched, and preserves the existing `externalinfo` / `errormessage` response shape expected by the Resurs admin UI.
+
 # 1.0.4 - 2026-04-03
 
 - When widget shortcode is disabled, the shortcould should be emptied.

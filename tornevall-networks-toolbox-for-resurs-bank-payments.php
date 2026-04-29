@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Tornevall Networks Toolbox for Resurs Bank Payments
  * Description: Independent utility plugin for WooCommerce with Resurs Bank Payments integration (not official or endorsed by Resurs Bank)
- * Version: 1.0.4
+ * Version: 1.0.5
  * Author: Thomas Tornevall
  * Author URI: https://www.tornevalls.se/
  * Text Domain: tornevall-networks-toolbox-for-resurs-bank-payments
@@ -47,6 +47,7 @@ require_once TORNEVALL_RESURS_TOOLBOX_PLUGIN_DIR . 'includes/class-resurs-toolbo
 require_once TORNEVALL_RESURS_TOOLBOX_PLUGIN_DIR . 'includes/class-resurs-toolbox-admin-page.php';
 require_once TORNEVALL_RESURS_TOOLBOX_PLUGIN_DIR . 'includes/class-resurs-toolbox-settings-tab.php';
 require_once TORNEVALL_RESURS_TOOLBOX_PLUGIN_DIR . 'includes/class-resurs-toolbox-settings.php';
+require_once TORNEVALL_RESURS_TOOLBOX_PLUGIN_DIR . 'includes/class-resurs-toolbox-ip-info-proxy.php';
 require_once TORNEVALL_RESURS_TOOLBOX_PLUGIN_DIR . 'includes/modules/class-resurs-toolbox-part-payment-widget.php';
 require_once TORNEVALL_RESURS_TOOLBOX_PLUGIN_DIR . 'includes/class-resurs-toolbox-plugin.php';
 require_once TORNEVALL_RESURS_TOOLBOX_PLUGIN_DIR . 'includes/class-resurs-toolbox-ajax-handler.php';
