@@ -4,6 +4,10 @@
 
 - Added a toolbox-side compatibility proxy for the Resurs admin `getRbIpInfo` helper call so stores no longer depend on the dead `https://ipv4.netcurl.org/` endpoint.
 - The toolbox now answers that callback from `https://ipv4.fraudbl.org/` instead, keeps the vendor plugin file untouched, and preserves the existing `externalinfo` / `errormessage` response shape expected by the Resurs admin UI.
+- New **Order Status Tester** section in the toolbox admin tab, allowing administrators to manually update a WooCommerce order status from the Resurs Bank toolbox UI (disabled when Resurs environment is Production).
+- Section tab navigation in the toolbox admin page (Dashboard / Order Status Tester).
+- AJAX handler for order status updates with nonce and capability validation.
+- Swedish translations updated to cover all new Order Status Tester UI strings.
 
 # 1.0.4 - 2026-04-03
 

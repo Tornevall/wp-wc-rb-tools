@@ -49,6 +49,7 @@ require_once TORNEVALL_RESURS_TOOLBOX_PLUGIN_DIR . 'includes/class-resurs-toolbo
 require_once TORNEVALL_RESURS_TOOLBOX_PLUGIN_DIR . 'includes/class-resurs-toolbox-settings.php';
 require_once TORNEVALL_RESURS_TOOLBOX_PLUGIN_DIR . 'includes/class-resurs-toolbox-ip-info-proxy.php';
 require_once TORNEVALL_RESURS_TOOLBOX_PLUGIN_DIR . 'includes/modules/class-resurs-toolbox-part-payment-widget.php';
+require_once TORNEVALL_RESURS_TOOLBOX_PLUGIN_DIR . 'includes/modules/class-resurs-toolbox-order-status-tester.php';
 require_once TORNEVALL_RESURS_TOOLBOX_PLUGIN_DIR . 'includes/class-resurs-toolbox-plugin.php';
 require_once TORNEVALL_RESURS_TOOLBOX_PLUGIN_DIR . 'includes/class-resurs-toolbox-ajax-handler.php';
 

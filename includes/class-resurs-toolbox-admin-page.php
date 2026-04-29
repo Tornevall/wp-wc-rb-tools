@@ -7,6 +7,78 @@ if (!defined('ABSPATH')) {
 
 class Tornevall_Resurs_Toolbox_Admin_Page {
     public static function render() {
+        // Get current section from query parameters
+        $current_section = isset($_GET['section']) ? sanitize_text_field(wp_unslash($_GET['section'])) : 'dashboard';
+
+        // Render page header
+        ?>
+        <div class="wrap">
+            <h1 class="tornevall-resurs-toolbox-title">
+                <?php esc_html_e('Tornevall Networks Toolbox for Resurs Bank Payments', 'tornevall-networks-toolbox-for-resurs-bank-payments'); ?>
+            </h1>
+
+            <div class="notice notice-warning">
+                <p>
+                    <strong>⚠️ <?php esc_html_e('DISCLAIMER:', 'tornevall-networks-toolbox-for-resurs-bank-payments'); ?></strong>
+                    <?php esc_html_e('This plugin is NOT created, maintained, or endorsed by Resurs Bank.', 'tornevall-networks-toolbox-for-resurs-bank-payments'); ?>
+                    <?php esc_html_e('It is an independent third-party utility tool.', 'tornevall-networks-toolbox-for-resurs-bank-payments'); ?>
+                </p>
+            </div>
+
+            <?php self::render_section_tabs($current_section); ?>
+
+            <?php
+            // Render content based on section
+            switch ($current_section) {
+                case 'order_status_tester':
+                    Tornevall_Resurs_Toolbox_Order_Status_Tester::render();
+                    break;
+
+                case 'dashboard':
+                default:
+                    self::render_dashboard();
+                    break;
+            }
+            ?>
+        </div>
+        <?php
+    }
+
+    /**
+     * Render section navigation tabs.
+     */
+    private static function render_section_tabs(string $current_section): void {
+        $sections = [
+            'dashboard' => __('Dashboard', 'tornevall-networks-toolbox-for-resurs-bank-payments'),
+            'order_status_tester' => __('Order Status Tester', 'tornevall-networks-toolbox-for-resurs-bank-payments'),
+        ];
+
+        echo '<nav class="nav-tab-wrapper woo-nav-tab-wrapper">';
+
+        foreach ($sections as $section_key => $section_label) {
+            $tab_url = add_query_arg(
+                [
+                    'page' => 'wc-settings',
+                    'tab' => 'tornevall_resurs_toolbox',
+                    'section' => $section_key,
+                ],
+                admin_url('admin.php')
+            );
+
+            $active_class = $current_section === $section_key ? 'nav-tab nav-tab-active' : 'nav-tab';
+
+            echo '<a href="' . esc_url($tab_url) . '" class="' . esc_attr($active_class) . '">';
+            echo esc_html($section_label);
+            echo '</a>';
+        }
+
+        echo '</nav>';
+    }
+
+    /**
+     * Render dashboard section.
+     */
+    private static function render_dashboard(): void {
         if (!function_exists('get_plugin_data') || !function_exists('is_plugin_active')) {
             require_once ABSPATH . 'wp-admin/includes/plugin.php';
         }
@@ -52,84 +124,69 @@ class Tornevall_Resurs_Toolbox_Admin_Page {
         $wordpress_plugin_url = self::get_wordpress_plugin_url($resurs_plugin_file, $resurs_plugin_data);
         $plugins_manager_url = self::get_plugins_manager_url($resurs_plugin_file);
         ?>
-        <div class="wrap">
-            <h1 class="tornevall-resurs-toolbox-title">
-                <?php esc_html_e('Tornevall Networks Toolbox for Resurs Bank Payments', 'tornevall-networks-toolbox-for-resurs-bank-payments'); ?>
-            </h1>
-
-            <div class="notice notice-warning">
-                <p>
-                    <strong>⚠️ <?php esc_html_e('DISCLAIMER:', 'tornevall-networks-toolbox-for-resurs-bank-payments'); ?></strong>
-                    <?php esc_html_e('This plugin is NOT created, maintained, or endorsed by Resurs Bank.', 'tornevall-networks-toolbox-for-resurs-bank-payments'); ?>
-                    <?php esc_html_e('It is an independent third-party utility tool.', 'tornevall-networks-toolbox-for-resurs-bank-payments'); ?>
-                </p>
+        <div class="tornevall-resurs-toolbox-cards">
+            <div class="card">
+                <h2><?php esc_html_e('About This Plugin', 'tornevall-networks-toolbox-for-resurs-bank-payments'); ?></h2>
+                <p><?php esc_html_e('Tornevall Networks Toolbox for Resurs Bank Payments provides utility and status tools for WooCommerce implementations that use Resurs Bank Payments.', 'tornevall-networks-toolbox-for-resurs-bank-payments'); ?></p>
             </div>
 
-            <div class="tornevall-resurs-toolbox-cards">
-                <div class="card">
-                    <h2><?php esc_html_e('About This Plugin', 'tornevall-networks-toolbox-for-resurs-bank-payments'); ?></h2>
-                    <p><?php esc_html_e('Tornevall Networks Toolbox for Resurs Bank Payments provides utility and status tools for WooCommerce implementations that use Resurs Bank Payments.', 'tornevall-networks-toolbox-for-resurs-bank-payments'); ?></p>
-                </div>
+            <div class="card">
+                <h2><?php esc_html_e('Resurs Plugin Status', 'tornevall-networks-toolbox-for-resurs-bank-payments'); ?></h2>
+                <?php if ($is_active): ?>
+                    <p><strong><?php esc_html_e('Status:', 'tornevall-networks-toolbox-for-resurs-bank-payments'); ?></strong> <span style="color: green;">✓ <?php esc_html_e('Active', 'tornevall-networks-toolbox-for-resurs-bank-payments'); ?></span></p>
+                <?php elseif ($is_installed): ?>
+                    <p><strong><?php esc_html_e('Status:', 'tornevall-networks-toolbox-for-resurs-bank-payments'); ?></strong> <span style="color: orange;">⚠ <?php esc_html_e('Installed (inactive)', 'tornevall-networks-toolbox-for-resurs-bank-payments'); ?></span></p>
+                <?php else: ?>
+                    <p><strong><?php esc_html_e('Status:', 'tornevall-networks-toolbox-for-resurs-bank-payments'); ?></strong> <span style="color: red;">✗ <?php esc_html_e('Not installed', 'tornevall-networks-toolbox-for-resurs-bank-payments'); ?></span></p>
+                <?php endif; ?>
 
-                <div class="card">
-                    <h2><?php esc_html_e('Resurs Plugin Status', 'tornevall-networks-toolbox-for-resurs-bank-payments'); ?></h2>
-                    <?php if ($is_active): ?>
-                        <p><strong><?php esc_html_e('Status:', 'tornevall-networks-toolbox-for-resurs-bank-payments'); ?></strong> <span style="color: green;">✓ <?php esc_html_e('Active', 'tornevall-networks-toolbox-for-resurs-bank-payments'); ?></span></p>
-                    <?php elseif ($is_installed): ?>
-                        <p><strong><?php esc_html_e('Status:', 'tornevall-networks-toolbox-for-resurs-bank-payments'); ?></strong> <span style="color: orange;">⚠ <?php esc_html_e('Installed (inactive)', 'tornevall-networks-toolbox-for-resurs-bank-payments'); ?></span></p>
-                    <?php else: ?>
-                        <p><strong><?php esc_html_e('Status:', 'tornevall-networks-toolbox-for-resurs-bank-payments'); ?></strong> <span style="color: red;">✗ <?php esc_html_e('Not installed', 'tornevall-networks-toolbox-for-resurs-bank-payments'); ?></span></p>
-                    <?php endif; ?>
+                <?php if (!empty($resurs_plugin_file)): ?>
+                    <p><strong><?php esc_html_e('Plugin file:', 'tornevall-networks-toolbox-for-resurs-bank-payments'); ?></strong> <?php echo esc_html($resurs_plugin_file); ?></p>
+                <?php endif; ?>
 
-                    <?php if (!empty($resurs_plugin_file)): ?>
-                        <p><strong><?php esc_html_e('Plugin file:', 'tornevall-networks-toolbox-for-resurs-bank-payments'); ?></strong> <?php echo esc_html($resurs_plugin_file); ?></p>
-                    <?php endif; ?>
+                <?php if (!empty($resurs_version)): ?>
+                    <p><strong><?php esc_html_e('Version:', 'tornevall-networks-toolbox-for-resurs-bank-payments'); ?></strong> <?php echo esc_html($resurs_version); ?></p>
 
-                    <?php if (!empty($resurs_version)): ?>
-                        <p><strong><?php esc_html_e('Version:', 'tornevall-networks-toolbox-for-resurs-bank-payments'); ?></strong> <?php echo esc_html($resurs_version); ?></p>
+                    <hr style="margin: 15px 0;">
 
-                        <hr style="margin: 15px 0;">
-
-                        <div id="version-check-container">
-                            <button
-                                type="button"
-                                class="button button-primary tornevall-resurs-toolbox-check-btn"
-                                id="check-version-btn"
-                                data-installed-version="<?php echo esc_attr($resurs_version); ?>"
-                                data-nonce="<?php echo esc_attr(wp_create_nonce('tornevall_resurs_toolbox_nonce')); ?>"
-                                data-wordpress-plugin-url="<?php echo esc_url($wordpress_plugin_url); ?>"
-                                data-plugins-manager-url="<?php echo esc_url($plugins_manager_url); ?>"
-                            >
-                                <span><?php esc_html_e('Check for Updates', 'tornevall-networks-toolbox-for-resurs-bank-payments'); ?></span>
-                                <span class="spinner" id="version-check-spinner" aria-hidden="true"></span>
-                            </button>
-                        </div>
-
-                        <div id="version-check-result" style="margin-top: 15px; display: none;"></div>
-                    <?php endif; ?>
-                </div>
-
-                <div class="card card--wide">
-                    <h2><?php esc_html_e('Part Payment Widget', 'tornevall-networks-toolbox-for-resurs-bank-payments'); ?></h2>
-                    <?php wp_nonce_field(Tornevall_Resurs_Toolbox_Settings::SETTINGS_NONCE_ACTION, Tornevall_Resurs_Toolbox_Settings::SETTINGS_NONCE_NAME); ?>
-                    <h3><?php esc_html_e('Part Payment Widget Settings', 'tornevall-networks-toolbox-for-resurs-bank-payments'); ?></h3>
-                    <?php Tornevall_Resurs_Toolbox_Settings::render_section_description(); ?>
-                    <table class="form-table" role="presentation">
-                        <tr>
-                            <th scope="row"><?php esc_html_e('Enable Shortcode Rendering', 'tornevall-networks-toolbox-for-resurs-bank-payments'); ?></th>
-                            <td><?php Tornevall_Resurs_Toolbox_Settings::render_enabled_field(); ?></td>
-                        </tr>
-                        <tr>
-                            <th scope="row"><?php esc_html_e('Shortcode Name', 'tornevall-networks-toolbox-for-resurs-bank-payments'); ?></th>
-                            <td><?php Tornevall_Resurs_Toolbox_Settings::render_shortcode_name_field(); ?></td>
-                        </tr>
-                    </table>
-                    <!--
-                    <div class="tornevall-resurs-toolbox-submit">
-                        <?php submit_button(__('Save Changes', 'tornevall-networks-toolbox-for-resurs-bank-payments'), 'primary', 'save', false); ?>
+                    <div id="version-check-container">
+                        <button
+                            type="button"
+                            class="button button-primary tornevall-resurs-toolbox-check-btn"
+                            id="check-version-btn"
+                            data-installed-version="<?php echo esc_attr($resurs_version); ?>"
+                            data-nonce="<?php echo esc_attr(wp_create_nonce('tornevall_resurs_toolbox_nonce')); ?>"
+                            data-wordpress-plugin-url="<?php echo esc_url($wordpress_plugin_url); ?>"
+                            data-plugins-manager-url="<?php echo esc_url($plugins_manager_url); ?>"
+                        >
+                            <span><?php esc_html_e('Check for Updates', 'tornevall-networks-toolbox-for-resurs-bank-payments'); ?></span>
+                            <span class="spinner" id="version-check-spinner" aria-hidden="true"></span>
+                        </button>
                     </div>
-                    -->
-                </div>
+
+                    <div id="version-check-result" style="margin-top: 15px; display: none;"></div>
+                <?php endif; ?>
+            </div>
+
+            <div class="card card--wide">
+                <h2><?php esc_html_e('Part Payment Widget', 'tornevall-networks-toolbox-for-resurs-bank-payments'); ?></h2>
+                <?php wp_nonce_field(Tornevall_Resurs_Toolbox_Settings::SETTINGS_NONCE_ACTION, Tornevall_Resurs_Toolbox_Settings::SETTINGS_NONCE_NAME); ?>
+                <h3><?php esc_html_e('Part Payment Widget Settings', 'tornevall-networks-toolbox-for-resurs-bank-payments'); ?></h3>
+                <?php Tornevall_Resurs_Toolbox_Settings::render_section_description(); ?>
+                <table class="form-table" role="presentation">
+                    <tr>
+                        <th scope="row"><?php esc_html_e('Enable Shortcode Rendering', 'tornevall-networks-toolbox-for-resurs-bank-payments'); ?></th>
+                        <td><?php Tornevall_Resurs_Toolbox_Settings::render_enabled_field(); ?></td>
+                    </tr>
+                    <tr>
+                        <th scope="row"><?php esc_html_e('Shortcode Name', 'tornevall-networks-toolbox-for-resurs-bank-payments'); ?></th>
+                        <td><?php Tornevall_Resurs_Toolbox_Settings::render_shortcode_name_field(); ?></td>
+                    </tr>
+                    <tr>
+                        <th scope="row"><?php esc_html_e('Top Settings Tab', 'tornevall-networks-toolbox-for-resurs-bank-payments'); ?></th>
+                        <td><?php Tornevall_Resurs_Toolbox_Settings::render_show_wc_settings_tab_field(); ?></td>
+                    </tr>
+                </table>
             </div>
         </div>
         <?php

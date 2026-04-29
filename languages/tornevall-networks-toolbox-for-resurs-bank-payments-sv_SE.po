@@ -196,3 +196,211 @@ msgstr "När detta är aktiverat renderas inte delbetalningswidgeten automatiskt
 msgid "Use this shortcode on your pages: [%s]"
 msgstr "Använd denna shortcode på dina sidor: [%s]"
 
+#: includes/class-resurs-toolbox-admin-page.php
+msgid "Dashboard"
+msgstr "Kontrollpanel"
+
+#: includes/modules/class-resurs-toolbox-order-status-tester.php
+msgid "Order Status Tester"
+msgstr "Orderstatus-testare"
+
+#: includes/modules/class-resurs-toolbox-order-status-tester.php
+msgid "Test and debug order status updates for Resurs Bank payments."
+msgstr "Testa och felsök orderstatus-uppdateringar för Resurs Bank-betalningar."
+
+#: includes/modules/class-resurs-toolbox-order-status-tester.php
+msgid "Order ID"
+msgstr "Order-ID"
+
+#: includes/modules/class-resurs-toolbox-order-status-tester.php
+msgid "e.g., 123"
+msgstr "t.ex. 123"
+
+#: includes/modules/class-resurs-toolbox-order-status-tester.php
+msgid "Enter the WooCommerce order ID to test status update."
+msgstr "Ange WooCommerce order-ID för att testa statusuppdatering."
+
+#: includes/modules/class-resurs-toolbox-order-status-tester.php
+msgid "New Order Status"
+msgstr "Ny orderstatus"
+
+#: includes/modules/class-resurs-toolbox-order-status-tester.php
+msgid "— Select Status —"
+msgstr "— Välj status —"
+
+#: includes/modules/class-resurs-toolbox-order-status-tester.php
+msgid "Select the status to update the order to."
+msgstr "Välj den status som ordern ska uppdateras till."
+
+#: includes/modules/class-resurs-toolbox-order-status-tester.php
+msgid "Order Note"
+msgstr "Orderanteckning"
+
+#: includes/modules/class-resurs-toolbox-order-status-tester.php
+msgid "Optional note to add to the order"
+msgstr "Valfri anteckning att lägga till ordern"
+
+#: includes/modules/class-resurs-toolbox-order-status-tester.php
+msgid "Add an optional note when updating the order status."
+msgstr "Lägg till en valfri anteckning när du uppdaterar orderstatus."
+
+#: includes/modules/class-resurs-toolbox-order-status-tester.php
+msgid "Update Order Status"
+msgstr "Uppdatera orderstatus"
+
+#: includes/modules/class-resurs-toolbox-order-status-tester.php
+#, php-format
+msgid "Order #%d status updated to \"%s\""
+msgstr "Order #%d status uppdaterad till \"%s\""
+
+#: includes/modules/class-resurs-toolbox-order-status-tester.php
+msgid "Recent Orders"
+msgstr "Senaste ordrar"
+
+#: includes/modules/class-resurs-toolbox-order-status-tester.php
+msgid "Select a recent order to quickly test status updates:"
+msgstr "Välj en senaste order för att snabbt testa statusuppdateringar:"
+
+#: includes/modules/class-resurs-toolbox-order-status-tester.php
+msgid "Security check failed"
+msgstr "Säkerhetskontrollen misslyckades"
+
+#: includes/modules/class-resurs-toolbox-order-status-tester.php
+msgid "Insufficient permissions"
+msgstr "Otillräckliga behörigheter"
+
+#: includes/modules/class-resurs-toolbox-order-status-tester.php
+msgid "Invalid order ID"
+msgstr "Ogiltigt order-ID"
+
+#: includes/modules/class-resurs-toolbox-order-status-tester.php
+msgid "Please select a status"
+msgstr "Vänligen välj en status"
+
+#: includes/modules/class-resurs-toolbox-order-status-tester.php
+#, php-format
+msgid "Order #%d not found"
+msgstr "Order #%d hittades inte"
+
+#: includes/modules/class-resurs-toolbox-order-status-tester.php
+#, php-format
+msgid "[Resurs Test] %s"
+msgstr "[Resurs Test] %s"
+
+#: includes/modules/class-resurs-toolbox-order-status-tester.php
+#, php-format
+msgid "Error updating order: %s"
+msgstr "Fel vid uppdatering av order: %s"
+
+#: includes/modules/class-resurs-toolbox-order-status-tester.php
+msgid "No orders found."
+msgstr "Inga ordrar hittades."
+
+#: includes/modules/class-resurs-toolbox-order-status-tester.php
+msgid "Date"
+msgstr "Datum"
+
+#: includes/modules/class-resurs-toolbox-order-status-tester.php
+msgid "Customer"
+msgstr "Kund"
+
+#: includes/modules/class-resurs-toolbox-order-status-tester.php
+msgid "Current Status"
+msgstr "Aktuell status"
+
+#: includes/modules/class-resurs-toolbox-order-status-tester.php
+msgid "Total"
+msgstr "Totalt"
+
+#: includes/modules/class-resurs-toolbox-order-status-tester.php
+msgid "Action"
+msgstr "Åtgärd"
+
+#: includes/modules/class-resurs-toolbox-order-status-tester.php
+msgid "Edit"
+msgstr "Redigera"
+
+#: includes/class-resurs-toolbox-plugin.php
+#: includes/modules/class-resurs-toolbox-order-status-tester.php
+#: includes/class-resurs-toolbox-ajax-handler.php
+msgid "Order Status Tester is disabled when Resurs environment is Production."
+msgstr "Order Status Tester är inaktiverad när Resurs-miljön är Produktion."
+
+#: includes/class-resurs-toolbox-plugin.php
+#: assets/admin-page.js
+msgid "— Select recent order —"
+msgstr "— Välj en nylig order —"
+
+#: includes/class-resurs-toolbox-plugin.php
+msgid "Loading orders..."
+msgstr "Laddar ordrar..."
+
+#: includes/class-resurs-toolbox-plugin.php
+#: includes/class-resurs-toolbox-ajax-handler.php
+msgid "Guest"
+msgstr "Gäst"
+
+#: includes/class-resurs-toolbox-plugin.php
+msgid "Could not load orders"
+msgstr "Kunde inte ladda ordrar"
+
+#: includes/modules/class-resurs-toolbox-order-status-tester.php
+msgid "Quick-select recent order"
+msgstr "Snabbval av nylig order"
+
+#: includes/modules/class-resurs-toolbox-order-status-tester.php
+msgid "Select from recent orders above, or type an order ID manually."
+msgstr "Välj bland nyliga ordrar ovan, eller skriv ett order-ID manuellt."
+
+#: includes/modules/class-resurs-toolbox-order-status-tester.php
+msgid "Status update details"
+msgstr "Detaljer om statusuppdatering"
+
+#: includes/modules/class-resurs-toolbox-order-status-tester.php
+#, php-format
+msgid "Order: #%d"
+msgstr "Order: #%d"
+
+#: includes/modules/class-resurs-toolbox-order-status-tester.php
+#, php-format
+msgid "Previous status: %s"
+msgstr "Tidigare status: %s"
+
+#: includes/modules/class-resurs-toolbox-order-status-tester.php
+#, php-format
+msgid "New status: %s"
+msgstr "Ny status: %s"
+
+#: includes/modules/class-resurs-toolbox-order-status-tester.php
+#, php-format
+msgid "Updated by: %s"
+msgstr "Uppdaterad av: %s"
+
+#: includes/modules/class-resurs-toolbox-order-status-tester.php
+#, php-format
+msgid "Updated at: %s"
+msgstr "Uppdaterad: %s"
+
+#: includes/modules/class-resurs-toolbox-order-status-tester.php
+msgid "Order note was added in this update."
+msgstr "Orderanteckning lades till i denna uppdatering."
+
+#: includes/modules/class-resurs-toolbox-order-status-tester.php
+msgid "No order note was added in this update."
+msgstr "Ingen orderanteckning lades till i denna uppdatering."
+
+#: includes/modules/class-resurs-toolbox-order-status-tester.php
+msgid "This tester updates WooCommerce order status locally in WordPress."
+msgstr "Detta testverktyg uppdaterar WooCommerce-orderstatus lokalt i WordPress."
+
+#: includes/modules/class-resurs-toolbox-order-status-tester.php
+msgid "Tip: Use the dropdown above to pick one of the five latest orders quickly."
+msgstr "Tips: Använd dropdownen ovan för att snabbt välja en av de fem senaste ordrarna."
+
+#: includes/class-resurs-toolbox-plugin.php
+msgid "Updating status..."
+msgstr "Uppdaterar status..."
+
+#: includes/class-resurs-toolbox-plugin.php
+msgid "Could not update order status"
+msgstr "Kunde inte uppdatera orderstatus"

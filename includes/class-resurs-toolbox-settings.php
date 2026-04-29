@@ -12,6 +12,7 @@ class Tornevall_Resurs_Toolbox_Settings {
     public const DEFAULT_SHORTCODE_NAME = 'resurs_partpayment_widget';
     public const SETTINGS_NONCE_ACTION = 'tornevall_resurs_toolbox_part_payment_settings';
     public const SETTINGS_NONCE_NAME = 'tornevall_resurs_toolbox_part_payment_settings_nonce';
+    public const OPTION_SHOW_WC_SETTINGS_TAB = 'tornevall_resurs_toolbox_show_wc_settings_tab';
 
     public static function register(): void {
         add_action('admin_init', [self::class, 'maybe_migrate_legacy_options']);
@@ -54,6 +55,11 @@ class Tornevall_Resurs_Toolbox_Settings {
         }
 
         return self::sanitize_shortcode_name($value);
+    }
+
+    public static function get_show_wc_settings_tab(): string {
+        $value = get_option(self::OPTION_SHOW_WC_SETTINGS_TAB, '0');
+        return self::sanitize_enabled($value);
     }
 
     public static function render_section_description(): void {
@@ -111,6 +117,31 @@ class Tornevall_Resurs_Toolbox_Settings {
         <?php
     }
 
+    public static function render_show_wc_settings_tab_field(): void {
+        $enabled = self::get_show_wc_settings_tab();
+        ?>
+        <fieldset>
+            <label>
+                <input
+                    type="hidden"
+                    name="<?php echo esc_attr(self::OPTION_SHOW_WC_SETTINGS_TAB); ?>"
+                    value="0"
+                />
+                <input
+                    type="checkbox"
+                    name="<?php echo esc_attr(self::OPTION_SHOW_WC_SETTINGS_TAB); ?>"
+                    value="1"
+                    <?php checked('1', $enabled); ?>
+                />
+                <?php esc_html_e('Show toolbox in WooCommerce top settings tabs', 'tornevall-networks-toolbox-for-resurs-bank-payments'); ?>
+            </label>
+            <p class="description">
+                <?php esc_html_e('Keep this disabled to use only the left WooCommerce menu link.', 'tornevall-networks-toolbox-for-resurs-bank-payments'); ?>
+            </p>
+        </fieldset>
+        <?php
+    }
+
     public static function sanitize_enabled($value): string {
         return (string) $value === '1' ? '1' : '0';
     }
@@ -155,8 +186,14 @@ class Tornevall_Resurs_Toolbox_Settings {
         $enabled = self::sanitize_enabled($enabledRaw ?? '0');
         $shortcodeName = self::sanitize_shortcode_name($nameRaw ?? self::DEFAULT_SHORTCODE_NAME);
 
+        $showWcTabRaw = isset($_POST[self::OPTION_SHOW_WC_SETTINGS_TAB])
+            ? sanitize_text_field(wp_unslash($_POST[self::OPTION_SHOW_WC_SETTINGS_TAB]))
+            : null;
+        $showWcTab = self::sanitize_enabled($showWcTabRaw ?? '0');
+
         update_option(self::OPTION_PP_SHORTCODE_ENABLED, $enabled);
         update_option(self::OPTION_PP_SHORTCODE_NAME, $shortcodeName);
+        update_option(self::OPTION_SHOW_WC_SETTINGS_TAB, $showWcTab);
     }
 }
 

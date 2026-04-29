@@ -42,11 +42,26 @@ class Tornevall_Resurs_Toolbox_Plugin {
         }
 
         add_action('woocommerce_api_wc_resurs_bank', ['Tornevall_Resurs_Toolbox_Ip_Info_Proxy', 'maybe_handle_request'], 0);
+        add_action('admin_menu', [$this, 'register_woocommerce_submenu_link'], 99);
         add_action('admin_enqueue_scripts', [$this, 'enqueue_admin_assets']);
 
         Tornevall_Resurs_Toolbox_Settings::register();
         Tornevall_Resurs_Toolbox_Part_Payment_Widget::init();
+        Tornevall_Resurs_Toolbox_Order_Status_Tester::init();
         Tornevall_Resurs_Toolbox_Settings_Tab::register();
+    }
+
+    /**
+     * Add a direct entry under WooCommerce menu to the toolbox settings tab.
+     */
+    public function register_woocommerce_submenu_link(): void {
+        add_submenu_page(
+            'woocommerce',
+            __('Tornevalls Toolbox for Resurs', 'tornevall-networks-toolbox-for-resurs-bank-payments'),
+            __('Tornevalls Toolbox for Resurs', 'tornevall-networks-toolbox-for-resurs-bank-payments'),
+            'manage_woocommerce',
+            'admin.php?page=wc-settings&tab=tornevall_resurs_toolbox'
+        );
     }
 
     public function enqueue_admin_assets($hook_suffix) {
@@ -56,12 +71,18 @@ class Tornevall_Resurs_Toolbox_Plugin {
 
         $style_handle = 'tornevall-resurs-toolbox-admin-page';
         $script_handle = 'tornevall-resurs-toolbox-admin-page';
+        $style_path = TORNEVALL_RESURS_TOOLBOX_PLUGIN_DIR . 'assets/admin-page.css';
+        $script_path = TORNEVALL_RESURS_TOOLBOX_PLUGIN_DIR . 'assets/admin-page.js';
+        $style_version = file_exists($style_path) ? (string)filemtime($style_path) : TORNEVALL_RESURS_TOOLBOX_VERSION;
+        $script_version = file_exists($script_path) ? (string)filemtime($script_path) : TORNEVALL_RESURS_TOOLBOX_VERSION;
+        $resurs_environment = get_option('resursbank_environment', 'test');
+        $is_resurs_production = is_string($resurs_environment) && strtolower($resurs_environment) === 'prod';
 
         wp_register_style(
             $style_handle,
             TORNEVALL_RESURS_TOOLBOX_PLUGIN_URL . 'assets/admin-page.css',
             [],
-            TORNEVALL_RESURS_TOOLBOX_VERSION
+            $style_version
         );
         wp_enqueue_style($style_handle);
 
@@ -69,12 +90,25 @@ class Tornevall_Resurs_Toolbox_Plugin {
             $script_handle,
             TORNEVALL_RESURS_TOOLBOX_PLUGIN_URL . 'assets/admin-page.js',
             [],
-            TORNEVALL_RESURS_TOOLBOX_VERSION,
+            $script_version,
             true
         );
 
         $config = [
             'ajaxUrl' => admin_url('admin-ajax.php'),
+            'orderStatusTester' => [
+                'nonce'             => wp_create_nonce('tornevall_resurs_order_status_nonce'),
+                'enabled'           => !$is_resurs_production,
+                'selectPlaceholder' => __('— Select recent order —', 'tornevall-networks-toolbox-for-resurs-bank-payments'),
+                'loadingText'       => __('Loading orders...', 'tornevall-networks-toolbox-for-resurs-bank-payments'),
+                'updatingText'      => __('Updating status...', 'tornevall-networks-toolbox-for-resurs-bank-payments'),
+                'guestLabel'        => __('Guest', 'tornevall-networks-toolbox-for-resurs-bank-payments'),
+                'errorText'         => __('Could not load orders', 'tornevall-networks-toolbox-for-resurs-bank-payments'),
+                'updateErrorText'   => __('Could not update order status', 'tornevall-networks-toolbox-for-resurs-bank-payments'),
+                'invalidOrderIdText'=> __('Invalid order ID', 'tornevall-networks-toolbox-for-resurs-bank-payments'),
+                'selectStatusText'  => __('Please select a status', 'tornevall-networks-toolbox-for-resurs-bank-payments'),
+                'disabledText'      => __('Order Status Tester is disabled when Resurs environment is Production.', 'tornevall-networks-toolbox-for-resurs-bank-payments'),
+            ],
             'messages' => [
                 'latestVersion' => __('Latest version on Bitbucket:', 'tornevall-networks-toolbox-for-resurs-bank-payments'),
                 'updateAvailable' => __('An update is available!', 'tornevall-networks-toolbox-for-resurs-bank-payments'),
@@ -127,4 +161,3 @@ class Tornevall_Resurs_Toolbox_Plugin {
         <?php
     }
 }
-

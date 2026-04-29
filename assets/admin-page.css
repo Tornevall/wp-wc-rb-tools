@@ -58,3 +58,189 @@
     }
 }
 
+/* Order Status Tester – quick-select wrapper */
+.tornevall-resurs-order-quick-select-wrap {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+.tornevall-resurs-order-quick-select-wrap select {
+    flex: 1;
+    max-width: 400px;
+}
+
+.tornevall-resurs-orders-spinner {
+    display: inline-block;
+    float: none;
+    margin: 0;
+    width: 16px;
+    height: 16px;
+    visibility: hidden;
+    vertical-align: middle;
+    background-size: 16px 16px;
+    flex-shrink: 0;
+}
+
+.tornevall-resurs-orders-spinner.is-active {
+    visibility: visible;
+}
+
+/* Order Status Tester Styles */
+.tornevall-resurs-order-status-tester {
+    background: #fff;
+    border: 1px solid #e5e5e5;
+    border-radius: 4px;
+    padding: 20px;
+    margin-top: 20px;
+}
+
+.tornevall-resurs-order-status-tester h2 {
+    margin-top: 0;
+    color: #0073aa;
+}
+
+.tornevall-resurs-order-status-tester h3 {
+    margin-top: 20px;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+#tornevall-resurs-order-status-live-result {
+    margin: 12px 0 0;
+}
+
+.tornevall-resurs-form-tester {
+    background: #f9f9f9;
+    border: 1px solid #e5e5e5;
+    border-radius: 4px;
+    padding: 20px;
+    margin: 20px 0;
+}
+
+.tornevall-resurs-form-tester .form-table {
+    margin: 0;
+}
+
+.tornevall-resurs-form-tester .form-table tr {
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.tornevall-resurs-form-tester .form-table th {
+    font-weight: 600;
+    padding: 15px;
+    text-align: left;
+    width: 25%;
+}
+
+.tornevall-resurs-form-tester .form-table td {
+    padding: 15px;
+}
+
+.tornevall-resurs-form-tester input.regular-text,
+.tornevall-resurs-form-tester select.regular-text,
+.tornevall-resurs-form-tester textarea {
+    width: 100%;
+    max-width: 400px;
+}
+
+.tornevall-resurs-form-tester textarea {
+    resize: vertical;
+}
+
+.tornevall-resurs-form-tester .description {
+    display: block;
+    margin-top: 5px;
+    color: #666;
+    font-size: 12px;
+}
+
+.tornevall-resurs-form-tester .tornevall-resurs-toolbox-submit {
+    margin-top: 12px;
+    padding-top: 0;
+    border-top: 0;
+}
+
+.tornevall-resurs-form-tester .tornevall-resurs-toolbox-submit .button {
+    margin: 0;
+}
+
+.tornevall-resurs-form-tester .tornevall-resurs-toolbox-submit {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+#tornevall-resurs-update-status-spinner {
+    float: none;
+    margin: 0;
+    visibility: hidden;
+}
+
+#tornevall-resurs-update-status-spinner.is-active {
+    visibility: visible;
+}
+
+.tornevall-resurs-order-status-progress {
+    margin-top: 12px;
+    padding: 10px 12px;
+    border-left: 4px solid #72aee6;
+    background: #f6fbff;
+}
+
+.tornevall-resurs-form-tester hr {
+    border: none;
+    border-top: 2px solid #e5e5e5;
+    margin: 30px 0;
+}
+
+.tornevall-resurs-form-tester .widefat {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.tornevall-resurs-form-tester .widefat thead th {
+    background: #f5f5f5;
+    border-bottom: 2px solid #e5e5e5;
+    padding: 10px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 12px;
+    text-transform: uppercase;
+    color: #666;
+}
+
+.tornevall-resurs-form-tester .widefat tbody td {
+    padding: 10px;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.tornevall-resurs-form-tester .widefat tbody tr:hover {
+    background: #f9f9f9;
+}
+
+.tornevall-resurs-form-tester .status-pending {
+    color: #8b4513;
+    font-weight: 600;
+}
+
+.tornevall-resurs-form-tester .status-processing {
+    color: #0073aa;
+    font-weight: 600;
+}
+
+.tornevall-resurs-form-tester .status-completed {
+    color: #2e8b57;
+    font-weight: 600;
+}
+
+.tornevall-resurs-form-tester .status-refunded {
+    color: #d32f2f;
+    font-weight: 600;
+}
+
+.tornevall-resurs-form-tester .status-on-hold {
+    color: #ff9800;
+    font-weight: 600;
+}
