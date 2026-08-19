@@ -5,6 +5,7 @@
     var endpoint = String(config.endpoint || '');
     var fieldName = String(config.fieldName || 'tornevall_checkout_tab_id');
     var headerName = String(config.headerName || 'X-Tornevall-Checkout-Tab');
+    var blockExtensionNamespace = String(config.blockExtensionNamespace || 'tornevall-resurs-checkout-tab-guard');
     var message = String(config.message || 'Checkout is already open in another tab. Close the other checkout tab before continuing.');
     var heartbeatMs = Number(config.heartbeatMs || 20000);
     var blockedRetryMs = Number(config.blockedRetryMs || 10000);
@@ -12,7 +13,9 @@
     var channelName = 'tornevall_resurs_checkout_tab_guard';
     var heartbeatTimer = null;
     var retryTimer = null;
+    var blockStoreUnsubscribe = null;
     var owner = false;
+    var leaseResolved = false;
     var released = false;
     var channel = null;
 
@@ -103,6 +106,37 @@
         });
     }
 
+    function installCheckoutBlockData() {
+        if (!window.wp || !window.wp.data || typeof window.wp.data.dispatch !== 'function') {
+            return false;
+        }
+
+        var checkoutStore = window.wp.data.dispatch('wc/store/checkout');
+        if (!checkoutStore || typeof checkoutStore.setExtensionData !== 'function') {
+            return false;
+        }
+
+        checkoutStore.setExtensionData(blockExtensionNamespace, { tabId: tabId });
+        return true;
+    }
+
+    function waitForCheckoutBlockData() {
+        if (installCheckoutBlockData()) {
+            return;
+        }
+
+        if (!window.wp || !window.wp.data || typeof window.wp.data.subscribe !== 'function') {
+            return;
+        }
+
+        blockStoreUnsubscribe = window.wp.data.subscribe(function () {
+            if (installCheckoutBlockData() && typeof blockStoreUnsubscribe === 'function') {
+                blockStoreUnsubscribe();
+                blockStoreUnsubscribe = null;
+            }
+        });
+    }
+
     function findCheckoutContainer() {
         return document.querySelector('.wp-block-woocommerce-checkout')
             || document.querySelector('form.checkout')
@@ -113,7 +147,7 @@
 
     function renderWarning() {
         var warning = document.getElementById('tornevall-checkout-tab-warning');
-        if (owner) {
+        if (!leaseResolved || owner) {
             if (warning) {
                 warning.remove();
             }
@@ -168,9 +202,10 @@
 
     function updateUi() {
         appendClassicField();
+        installCheckoutBlockData();
         renderWarning();
         updateSubmitState();
-        document.body.classList.toggle('tornevall-checkout-tab-blocked', !owner);
+        document.body.classList.toggle('tornevall-checkout-tab-blocked', leaseResolved && !owner);
     }
 
     function stopHeartbeat() {
@@ -189,6 +224,7 @@
 
     function becomeOwner() {
         owner = true;
+        leaseResolved = true;
         stopRetry();
         updateUi();
 
@@ -224,6 +260,7 @@
 
     function becomeBlocked() {
         owner = false;
+        leaseResolved = true;
         stopHeartbeat();
         updateUi();
 
@@ -324,36 +361,6 @@
         });
     }
 
-    function installFetchFallback() {
-        if (typeof window.fetch !== 'function' || window.fetch.__tornevallCheckoutTabGuard) {
-            return;
-        }
-
-        var originalFetch = window.fetch;
-        var guardedFetch = function (input, init) {
-            var target = typeof input === 'string' ? input : (input && input.url ? input.url : '');
-            if (!isStoreApiCheckoutUrl(target)) {
-                return originalFetch.call(window, input, init);
-            }
-
-            var options = Object.assign({}, init || {});
-            var sourceHeaders = options.headers || (input instanceof Request ? input.headers : undefined);
-            var headers = new Headers(sourceHeaders || {});
-            headers.set(headerName, tabId);
-
-            if (input instanceof Request) {
-                input = new Request(input, { headers: headers });
-            } else {
-                options.headers = headers;
-            }
-
-            return originalFetch.call(window, input, options);
-        };
-
-        guardedFetch.__tornevallCheckoutTabGuard = true;
-        window.fetch = guardedFetch;
-    }
-
     document.addEventListener('submit', function (event) {
         if (owner) {
             return;
@@ -385,6 +392,7 @@
 
     var observer = new MutationObserver(function () {
         appendClassicField();
+        installCheckoutBlockData();
         if (!owner) {
             renderWarning();
             updateSubmitState();
@@ -392,23 +400,32 @@
     });
 
     installCrossTabSignals();
-    installFetchFallback();
+    installApiFetchMiddleware();
+    waitForCheckoutBlockData();
 
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', function () {
-            installApiFetchMiddleware();
-            appendClassicField();
-            updateUi();
-            observer.observe(document.body, { childList: true, subtree: true });
-            attemptClaim();
-        });
-    } else {
-        installApiFetchMiddleware();
+    function start() {
         appendClassicField();
         updateUi();
         observer.observe(document.body, { childList: true, subtree: true });
         attemptClaim();
     }
 
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', start);
+    } else {
+        start();
+    }
+
     window.addEventListener('pagehide', releaseLease);
+    window.addEventListener('pageshow', function () {
+        if (!released) {
+            return;
+        }
+
+        released = false;
+        owner = false;
+        leaseResolved = false;
+        updateUi();
+        attemptClaim();
+    });
 }());
