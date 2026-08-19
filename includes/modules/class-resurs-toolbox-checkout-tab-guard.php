@@ -15,6 +15,7 @@ class Tornevall_Resurs_Toolbox_Checkout_Tab_Guard
     public const OPTION_ENABLED = 'tornevall_resurs_toolbox_checkout_tab_guard_enabled';
     public const FIELD_NAME = 'tornevall_checkout_tab_id';
     public const HEADER_NAME = 'X-Tornevall-Checkout-Tab';
+    public const BLOCK_EXTENSION_NAMESPACE = 'tornevall-resurs-checkout-tab-guard';
     public const AJAX_ACTION = 'tornevall_checkout_tab_guard';
     public const NONCE_ACTION = 'tornevall_resurs_checkout_tab_guard';
 
@@ -70,6 +71,7 @@ class Tornevall_Resurs_Toolbox_Checkout_Tab_Guard
             'nonce' => wp_create_nonce(self::NONCE_ACTION),
             'fieldName' => self::FIELD_NAME,
             'headerName' => self::HEADER_NAME,
+            'blockExtensionNamespace' => self::BLOCK_EXTENSION_NAMESPACE,
             'heartbeatMs' => 20000,
             'blockedRetryMs' => 10000,
             'message' => __(
@@ -188,7 +190,7 @@ class Tornevall_Resurs_Toolbox_Checkout_Tab_Guard
             return $response;
         }
 
-        $tabId = self::sanitize_tab_id((string)$request->get_header(self::HEADER_NAME));
+        $tabId = self::extract_store_api_tab_id($request);
         if (!self::is_current_owner($tabId)) {
             return new WP_Error(
                 'tornevall_checkout_tab_conflict',
@@ -432,6 +434,26 @@ class Tornevall_Resurs_Toolbox_Checkout_Tab_Guard
         }
 
         return '';
+    }
+
+    private static function extract_store_api_tab_id(WP_REST_Request $request): string
+    {
+        $headerTabId = self::sanitize_tab_id((string)$request->get_header(self::HEADER_NAME));
+        if ($headerTabId !== '') {
+            return $headerTabId;
+        }
+
+        $extensions = $request->get_param('extensions');
+        if (!is_array($extensions)) {
+            return '';
+        }
+
+        $guardData = $extensions[self::BLOCK_EXTENSION_NAMESPACE] ?? null;
+        if (!is_array($guardData) || !isset($guardData['tabId'])) {
+            return '';
+        }
+
+        return self::sanitize_tab_id((string)$guardData['tabId']);
     }
 
     private static function sanitize_tab_id(string $tabId): string
