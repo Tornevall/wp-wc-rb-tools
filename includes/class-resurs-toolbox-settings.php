@@ -157,7 +157,7 @@ class Tornevall_Resurs_Toolbox_Settings {
     }
 
     public static function save_from_woocommerce(): void {
-        // First check: nonce validation (CSRF protection) — must come before reading any input
+        // First check: nonce validation (CSRF protection) - must come before reading any input
         check_admin_referer(self::SETTINGS_NONCE_ACTION, self::SETTINGS_NONCE_NAME);
 
         // Second check: user permissions (authorization)
@@ -173,7 +173,7 @@ class Tornevall_Resurs_Toolbox_Settings {
         }
 
         // Both checks passed: proceed with data processing
-        // Enabled flag: expects '0' or '1' (hidden/checkbox pair) — sanitize immediately on read
+        // Enabled flag: expects '0' or '1' (hidden/checkbox pair) - sanitize immediately on read
         $enabledRaw = isset($_POST[self::OPTION_PP_SHORTCODE_ENABLED])
             ? sanitize_text_field(wp_unslash($_POST[self::OPTION_PP_SHORTCODE_ENABLED]))
             : null;
@@ -194,6 +194,8 @@ class Tornevall_Resurs_Toolbox_Settings {
         update_option(self::OPTION_PP_SHORTCODE_ENABLED, $enabled);
         update_option(self::OPTION_PP_SHORTCODE_NAME, $shortcodeName);
         update_option(self::OPTION_SHOW_WC_SETTINGS_TAB, $showWcTab);
+
+        Tornevall_Resurs_Toolbox_Checkout_Tab_Guard::save_setting();
     }
 }
 
