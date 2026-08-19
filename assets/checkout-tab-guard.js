@@ -9,11 +9,15 @@
     var message = String(config.message || 'Checkout is already open in another tab. Close the other checkout tab before continuing.');
     var heartbeatMs = Number(config.heartbeatMs || 20000);
     var blockedRetryMs = Number(config.blockedRetryMs || 10000);
+    var collisionWaitMs = 150;
     var storageKey = 'tornevall_resurs_checkout_tab_guard_event';
     var channelName = 'tornevall_resurs_checkout_tab_guard';
     var heartbeatTimer = null;
     var retryTimer = null;
     var blockStoreUnsubscribe = null;
+    var blockDataInstalled = false;
+    var apiFetchMiddlewareInstalled = false;
+    var claimStarted = false;
     var owner = false;
     var leaseResolved = false;
     var released = false;
@@ -39,6 +43,27 @@
         return String(Date.now()) + '-' + Math.random().toString(36).slice(2) + '-' + Math.random().toString(36).slice(2);
     }
 
+    function shouldReuseStoredTabId() {
+        if (!window.performance || typeof window.performance.getEntriesByType !== 'function') {
+            return true;
+        }
+
+        var navigationEntries = window.performance.getEntriesByType('navigation');
+        if (!navigationEntries || navigationEntries.length === 0) {
+            return true;
+        }
+
+        return navigationEntries[0].type === 'reload' || navigationEntries[0].type === 'back_forward';
+    }
+
+    function storeTabId(value) {
+        try {
+            window.sessionStorage.setItem('tornevall_resurs_checkout_tab_id', value);
+        } catch (error) {
+            // sessionStorage may be unavailable in hardened/private browser contexts.
+        }
+    }
+
     function getTabId() {
         var existing = '';
 
@@ -48,21 +73,27 @@
             existing = '';
         }
 
-        if (/^[a-z0-9-]{16,64}$/.test(existing)) {
+        if (/^[a-z0-9-]{16,64}$/.test(existing) && shouldReuseStoredTabId()) {
             return existing;
         }
 
         var generated = createTabId().replace(/[^a-z0-9-]/g, '').slice(0, 64);
-        try {
-            window.sessionStorage.setItem('tornevall_resurs_checkout_tab_id', generated);
-        } catch (error) {
-            // sessionStorage may be unavailable in hardened/private browser contexts.
-        }
-
+        storeTabId(generated);
         return generated;
     }
 
     var tabId = getTabId();
+    var instanceId = createTabId();
+
+    function regenerateTabId() {
+        tabId = createTabId().replace(/[^a-z0-9-]/g, '').slice(0, 64);
+        storeTabId(tabId);
+        blockDataInstalled = false;
+        owner = false;
+        leaseResolved = false;
+        stopHeartbeat();
+        updateUi();
+    }
 
     function buildPayload(operation) {
         var payload = new URLSearchParams();
@@ -107,16 +138,27 @@
     }
 
     function installCheckoutBlockData() {
+        if (blockDataInstalled) {
+            return true;
+        }
+
         if (!window.wp || !window.wp.data || typeof window.wp.data.dispatch !== 'function') {
             return false;
         }
 
-        var checkoutStore = window.wp.data.dispatch('wc/store/checkout');
+        var checkoutStore;
+        try {
+            checkoutStore = window.wp.data.dispatch('wc/store/checkout');
+        } catch (error) {
+            return false;
+        }
+
         if (!checkoutStore || typeof checkoutStore.setExtensionData !== 'function') {
             return false;
         }
 
         checkoutStore.setExtensionData(blockExtensionNamespace, { tabId: tabId });
+        blockDataInstalled = true;
         return true;
     }
 
@@ -125,7 +167,7 @@
             return;
         }
 
-        if (!window.wp || !window.wp.data || typeof window.wp.data.subscribe !== 'function') {
+        if (!window.wp || !window.wp.data || typeof window.wp.data.subscribe !== 'function' || blockStoreUnsubscribe) {
             return;
         }
 
@@ -155,7 +197,9 @@
         }
 
         if (warning) {
-            warning.textContent = message;
+            if (warning.textContent !== message) {
+                warning.textContent = message;
+            }
             return;
         }
 
@@ -269,23 +313,99 @@
         }
     }
 
-    function broadcastRelease() {
-        var event = JSON.stringify({
-            type: 'released',
-            tabId: tabId,
-            timestamp: Date.now()
-        });
+    function emitCrossTabEvent(data) {
+        data.instanceId = instanceId;
+        data.timestamp = Date.now();
 
         if (channel) {
-            channel.postMessage({ type: 'released', tabId: tabId });
+            channel.postMessage(data);
         }
 
         try {
-            window.localStorage.setItem(storageKey, event);
+            window.localStorage.setItem(storageKey, JSON.stringify(data));
             window.localStorage.removeItem(storageKey);
         } catch (error) {
             // localStorage is only a fast cross-tab signal; the server lease still expires.
         }
+    }
+
+    function handleCrossTabEvent(data) {
+        if (!data || data.instanceId === instanceId) {
+            return;
+        }
+
+        if (data.type === 'probe' && data.tabId === tabId) {
+            emitCrossTabEvent({
+                type: 'collision',
+                tabId: tabId,
+                targetInstanceId: data.instanceId
+            });
+            return;
+        }
+
+        if (
+            data.type === 'collision'
+            && data.targetInstanceId === instanceId
+            && data.tabId === tabId
+        ) {
+            regenerateTabId();
+            if (claimStarted) {
+                attemptClaim();
+            }
+            return;
+        }
+
+        if (data.type === 'released' && data.tabId !== tabId && !owner) {
+            attemptClaim();
+        }
+    }
+
+    function installCrossTabSignals() {
+        if ('BroadcastChannel' in window) {
+            channel = new BroadcastChannel(channelName);
+            channel.addEventListener('message', function (event) {
+                handleCrossTabEvent(event.data);
+            });
+        }
+
+        window.addEventListener('storage', function (event) {
+            if (event.key !== storageKey || !event.newValue) {
+                return;
+            }
+
+            try {
+                handleCrossTabEvent(JSON.parse(event.newValue));
+            } catch (error) {
+                // Ignore malformed cross-tab events.
+            }
+        });
+    }
+
+    function isStoreApiCheckoutUrl(value) {
+        var url = String(value || '');
+        return /\/wc\/store\/v[0-9]+\/checkout(?:[/?#]|$)/.test(url)
+            || /rest_route=%2Fwc%2Fstore%2Fv[0-9]+%2Fcheckout/i.test(url)
+            || /rest_route=\/wc\/store\/v[0-9]+\/checkout/i.test(url);
+    }
+
+    function installApiFetchMiddleware() {
+        if (apiFetchMiddlewareInstalled) {
+            return;
+        }
+
+        if (!window.wp || !window.wp.apiFetch || typeof window.wp.apiFetch.use !== 'function') {
+            return;
+        }
+
+        window.wp.apiFetch.use(function (options, next) {
+            var target = options.path || options.url || '';
+            if (isStoreApiCheckoutUrl(target)) {
+                options.headers = Object.assign({}, options.headers || {});
+                options.headers[headerName] = tabId;
+            }
+            return next(options);
+        });
+        apiFetchMiddlewareInstalled = true;
     }
 
     function releaseLease() {
@@ -309,56 +429,8 @@
                     // The TTL handles browsers that cannot deliver the release request.
                 });
             }
-            broadcastRelease();
+            emitCrossTabEvent({ type: 'released', tabId: tabId });
         }
-    }
-
-    function installCrossTabSignals() {
-        if ('BroadcastChannel' in window) {
-            channel = new BroadcastChannel(channelName);
-            channel.addEventListener('message', function (event) {
-                if (event.data && event.data.type === 'released' && event.data.tabId !== tabId && !owner) {
-                    attemptClaim();
-                }
-            });
-        }
-
-        window.addEventListener('storage', function (event) {
-            if (event.key !== storageKey || !event.newValue || owner) {
-                return;
-            }
-
-            try {
-                var data = JSON.parse(event.newValue);
-                if (data.type === 'released' && data.tabId !== tabId) {
-                    attemptClaim();
-                }
-            } catch (error) {
-                // Ignore malformed cross-tab events.
-            }
-        });
-    }
-
-    function isStoreApiCheckoutUrl(value) {
-        var url = String(value || '');
-        return /\/wc\/store\/v[0-9]+\/checkout(?:[/?#]|$)/.test(url)
-            || /rest_route=%2Fwc%2Fstore%2Fv[0-9]+%2Fcheckout/i.test(url)
-            || /rest_route=\/wc\/store\/v[0-9]+\/checkout/i.test(url);
-    }
-
-    function installApiFetchMiddleware() {
-        if (!window.wp || !window.wp.apiFetch || typeof window.wp.apiFetch.use !== 'function') {
-            return;
-        }
-
-        window.wp.apiFetch.use(function (options, next) {
-            var target = options.path || options.url || '';
-            if (isStoreApiCheckoutUrl(target)) {
-                options.headers = Object.assign({}, options.headers || {});
-                options.headers[headerName] = tabId;
-            }
-            return next(options);
-        });
     }
 
     document.addEventListener('submit', function (event) {
@@ -392,7 +464,6 @@
 
     var observer = new MutationObserver(function () {
         appendClassicField();
-        installCheckoutBlockData();
         if (!owner) {
             renderWarning();
             updateSubmitState();
@@ -401,13 +472,19 @@
 
     installCrossTabSignals();
     installApiFetchMiddleware();
-    waitForCheckoutBlockData();
 
     function start() {
+        installApiFetchMiddleware();
+        waitForCheckoutBlockData();
         appendClassicField();
         updateUi();
         observer.observe(document.body, { childList: true, subtree: true });
-        attemptClaim();
+
+        emitCrossTabEvent({ type: 'probe', tabId: tabId });
+        window.setTimeout(function () {
+            claimStarted = true;
+            attemptClaim();
+        }, collisionWaitMs);
     }
 
     if (document.readyState === 'loading') {
@@ -425,6 +502,7 @@
         released = false;
         owner = false;
         leaseResolved = false;
+        blockDataInstalled = false;
         updateUi();
         attemptClaim();
     });
