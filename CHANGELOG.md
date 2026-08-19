@@ -1,5 +1,14 @@
 # Changelog
 
+## Unreleased
+
+### Added
+
+- Optional Checkout Tab Guard setting for limiting a WooCommerce customer session to one active checkout tab at a time.
+- Per-tab checkout ownership with a small server lease, browser cross-tab collision detection, heartbeat refresh and automatic stale-lock expiry.
+- Server-side submission protection for classic WooCommerce checkout, Checkout Block Store API payment processing and the legacy Resurs Checkout `prepare-omni-order` flow.
+- Stale checkout tabs show a checkout warning and cannot submit payment; the WooCommerce cart and customer session remain intact.
+
 # 1.0.5 - 2026-04-28
 
 - Added a toolbox-side compatibility proxy for the Resurs admin `getRbIpInfo` helper call so stores no longer depend on the dead `https://ipv4.netcurl.org/` endpoint.
@@ -32,8 +41,8 @@
 ### Fixed
 
 - Adjusted plugin path resolution to use plugin constants defined from the main plugin file, ensuring compatibility with WordPress directory handling across installations.
-- Corrected external-service disclosure in `readme.txt` and `README.md`: the Bitbucket version check request is only sent when an administrator manually clicks "Check for Updates" — not on settings page load.
-- Replaced manual `wp_verify_nonce()` conditional in `save_from_woocommerce()` with `check_admin_referer()` — the WordPress-standard single-call nonce check that static analysis tools and plugin-review scanners reliably recognise.
+- Corrected external-service disclosure in `readme.txt` and `README.md`: the Bitbucket version check request is only sent when an administrator manually clicks "Check for Updates" - not on settings page load.
+- Replaced manual `wp_verify_nonce()` conditional in `save_from_woocommerce()` with `check_admin_referer()` - the WordPress-standard single-call nonce check that static analysis tools and plugin-review scanners reliably recognise.
 - Replaced manual `wp_verify_nonce()` conditional in the `check_version` AJAX handler with `check_ajax_referer()` for the same reason.
 - Reordered security checks in both handlers so that nonce validation (CSRF protection) now runs before capability checks (`current_user_can()`), following WordPress plugin-review recommendations.
 
