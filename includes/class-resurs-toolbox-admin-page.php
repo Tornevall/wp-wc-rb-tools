@@ -186,6 +186,10 @@ class Tornevall_Resurs_Toolbox_Admin_Page {
                         <th scope="row"><?php esc_html_e('Top Settings Tab', 'tornevall-networks-toolbox-for-resurs-bank-payments'); ?></th>
                         <td><?php Tornevall_Resurs_Toolbox_Settings::render_show_wc_settings_tab_field(); ?></td>
                     </tr>
+                    <tr>
+                        <th scope="row"><?php esc_html_e('Checkout Tab Guard', 'tornevall-networks-toolbox-for-resurs-bank-payments'); ?></th>
+                        <td><?php Tornevall_Resurs_Toolbox_Checkout_Tab_Guard::render_enabled_field(); ?></td>
+                    </tr>
                 </table>
             </div>
         </div>

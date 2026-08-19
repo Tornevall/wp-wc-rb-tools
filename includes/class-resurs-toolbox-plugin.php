@@ -48,6 +48,7 @@ class Tornevall_Resurs_Toolbox_Plugin {
         Tornevall_Resurs_Toolbox_Settings::register();
         Tornevall_Resurs_Toolbox_Part_Payment_Widget::init();
         Tornevall_Resurs_Toolbox_Order_Status_Tester::init();
+        Tornevall_Resurs_Toolbox_Checkout_Tab_Guard::init();
         Tornevall_Resurs_Toolbox_Settings_Tab::register();
     }
 
