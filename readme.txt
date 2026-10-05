@@ -14,6 +14,8 @@ License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
 Independent utility plugin for WooCommerce with Resurs Bank Payments integration.
 
+**Deprecation notice:** This plugin will most likely be deprecated in the near future.
+
 == Description ==
 
 Tornevall Networks Toolbox for Resurs Bank Payments is an independent developer and merchant utility plugin—**not officially affiliated with or endorsed by Resurs Bank**.
