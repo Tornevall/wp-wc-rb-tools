@@ -31,6 +31,14 @@ msgid "It is an independent third-party utility tool."
 msgstr "Det är ett fristående verktyg från tredje part."
 
 #: includes/class-resurs-toolbox-admin-page.php
+msgid "DEPRECATION NOTICE:"
+msgstr "AVVECKLINGSINFORMATION:"
+
+#: includes/class-resurs-toolbox-admin-page.php
+msgid "This plugin will most likely be deprecated in the near future as part of ongoing restructuring."
+msgstr "Detta tillägg kommer med största sannolikhet att fasas ut inom en snar framtid som en del av en pågående omstrukturering."
+
+#: includes/class-resurs-toolbox-admin-page.php
 msgid "About This Plugin"
 msgstr "Om detta tillägg"
 

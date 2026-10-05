@@ -14,7 +14,7 @@ License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
 Independent utility plugin for WooCommerce with Resurs Bank Payments integration.
 
-**Deprecation notice:** This plugin will most likely be deprecated in the near future.
+**Deprecation notice:** This plugin will most likely be deprecated in the near future as part of ongoing restructuring.
 
 == Description ==
 
