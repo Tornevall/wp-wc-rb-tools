@@ -25,6 +25,13 @@ class Tornevall_Resurs_Toolbox_Admin_Page {
                 </p>
             </div>
 
+            <div class="notice notice-warning">
+                <p>
+                    <strong><?php esc_html_e('DEPRECATION NOTICE:', 'tornevall-networks-toolbox-for-resurs-bank-payments'); ?></strong>
+                    <?php esc_html_e('This plugin will most likely be deprecated in the near future as part of ongoing restructuring.', 'tornevall-networks-toolbox-for-resurs-bank-payments'); ?>
+                </p>
+            </div>
+
             <?php self::render_section_tabs($current_section); ?>
 
             <?php
