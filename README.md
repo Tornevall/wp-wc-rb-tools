@@ -1,6 +1,6 @@
 # Tornevall Networks Toolbox for Resurs Bank Payments
 
-> **Deprecation notice:** This plugin will most likely be deprecated in the near future.
+> **Deprecation notice:** This plugin will most likely be deprecated in the near future as part of ongoing restructuring.
 
 Independent utility plugin for WooCommerce stores that use Resurs Bank Payments. This plugin is **not** created, maintained, supported, or endorsed by Resurs Bank.
 
